@@ -10,6 +10,7 @@ def get_video_length(input_file):
         text=True
     )
     print(result)
+    print(input_file)
     return float(result.stdout.strip())
 
 
@@ -46,10 +47,10 @@ def combine_videos(file_list, output_file):
         for filename in file_list:
             f.write(f"file '{filename}'\n")
 
-    # Use ffmpeg to concatenate the videos
+    # Use ffmpeg to concatenate the videos and re-encode to ensure keyframes are handled correctly
     subprocess.run([
         'ffmpeg', '-y', '-f', 'concat', '-safe', '0', '-i', list_file,
-        '-c', 'copy', output_file
+        '-c:v', 'libx264', '-preset', 'fast', '-crf', '18', '-g', '25', output_file
     ], check=True)
 
     # Remove the temporary list file

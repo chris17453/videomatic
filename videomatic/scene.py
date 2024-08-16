@@ -101,7 +101,7 @@ class Scene:
 
     def correct_fragments(self, redo=False, indexes=None):
         for scene in self.scenes:
-            input_file =  os.path.join(self.video_dir, f"vid_{scene['id']:04d}.webm")
+            input_file =  os.path.join(self.video_dir, f"vid_{scene['id']:05d}.webm")
             scene['video'] = input_file
             output_file = os.path.join(self.video_dir,'temp', f"vid_{scene['id']:04d}.mp4")
             stretch_video(input_file, output_file,scene['length'])
@@ -130,7 +130,7 @@ class Scene:
         for scene in self.scenes:
             if scene['prompt']==None:
                 continue
-            filename = os.path.join(self.frame_dir, f"frame_{scene['id']:04d}.png")
+            filename = os.path.join(self.frame_dir, f"frame_{scene['id']:05d}.png")
             scene['frame'] = filename  
 
             if  redo:

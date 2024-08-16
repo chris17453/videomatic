@@ -1,7 +1,7 @@
 scenes:
 - id: 1
   length: 6
-  name: Opening Vista
+  name: Opening
   prompt: A dark moonlight sky decending upon an remote woods, the moon is large and
     blood red
   timestamp: 0
@@ -13,20 +13,20 @@ scenes:
   timestamp: 6
 - id: 3
   length: 3
-  name: Developer Close-Up
+  name: Close-Up
   prompt: A wide shot of an middle aged man with a short grey beard and wild brown
     grey hair  typing on a sleek, futuristic computer. The setting is infused with
     Gothic  and a slight haze in the air.
   timestamp: 12
 - id: 4
   length: 3
-  name: NEW Beginnings
+  name: Beginnings
   prompt: A closeup of a paper note with a hand holding a pencil that says  watkins=new
     beginnings();
   timestamp: 15
 - id: 5
   length: 3
-  name: Whiteboard Coding
+  name: Whiteboard
   prompt: A Gothic-themed classroom where a an middle aged man with a short grey beard
     and wild brown grey hair  writes code on a digital whiteboard. The room is bathed
     in neon lights, with holographic elements floating around, and futuristic gadgets
@@ -57,7 +57,7 @@ scenes:
   timestamp: 31
 - id: 10
   length: 3
-  name: Late Night Work
+  name: Late Work
   prompt: "an middle aged man with a short grey beard and wild brown grey hair  working\
     \ late into the night in a Gothic-themed workspace. The room is dimly lit, with\
     \ neon lights reflecting off the metal surfaces, and the city\u2019s neon skyline\
@@ -71,7 +71,7 @@ scenes:
   timestamp: 38
 - id: 12
   length: 6
-  name: Project Celebration
+  name: Celebration
   prompt: "A high-energy celebration after success. The scene features a futuristic\
     \ setting with holographic confetti, neon lights, and a digital display showing\
     \ the project\u2019s success"
@@ -90,8 +90,8 @@ scenes:
 - id: 15
   length: 3
   name: Achievement
-  prompt: A close-up of a award that says BEST WATKINS EVER, displayed on a holographic
-    screen in a sleek, Gothic environment
+  prompt: WATKINS for the win. Written in ink on a wall. people cheering, in a Gothic
+    environment
   timestamp: 54
 - id: 16
   length: 4
@@ -100,7 +100,7 @@ scenes:
   timestamp: 57
 - id: 17
   length: 3
-  name: Developer Focus
+  name: Focus
   prompt: A focused shot of an middle aged man with a short grey beard and wild brown
     grey hair  concentrating intensely on a complex task. The scene is set in a Gothic
     workspace, with the glow of monitors and neon lights reflecting off the developer's
@@ -113,31 +113,31 @@ scenes:
   timestamp: 64
 - id: 19
   length: 4
-  name: Hire 4
+  name: Hire 5
   prompt: Written with rags on the floor. A Sign that says Hire Watkins for RAG Systems.
   timestamp: 67
 - id: 20
   length: 3
-  name: Tools Montage
+  name: Tools
   prompt: A montage of different programming languages, cobol, pascal, python, visual
     basic, lula on a wall under a bridge
   timestamp: 71
 - id: 21
   length: 3
-  name: Project Presentation
+  name: Project
   prompt: 'an middle aged man with a short grey beard and wild brown grey hair  presenting
     a project in a Gothic boardroom, with holographic displays showing the project
     details. '
   timestamp: 74
 - id: 22
   length: 4
-  name: Hire 4
+  name: Hire 6
   prompt: in the sand in written in water. Sign that says Hire Watkins for AI Models
     .
   timestamp: 77
 - id: 23
   length: 3
-  name: Fast-Paced Coding
+  name: Fast-Paced
   prompt: An intense coding scene where lines of code rapidly appear on multiple screens
     in a Gothic environment. The room is dark, with neon lights reflecting off the
     screens, creating a sense of urgency.
@@ -155,7 +155,7 @@ scenes:
   timestamp: 87
 - id: 26
   length: 6
-  name: Adaptability and Learning
+  name: Adaptability
   prompt: in a Gothic room. The an middle aged man with a short grey beard and wild
     brown grey hair  is shown using tools to build a robot
   timestamp: 93
@@ -163,190 +163,176 @@ scenes:
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'C' in bright
-    green against a black background. The screen has a slight curvature and horizontal
-    lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'C' in bright green against
+    a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 99
 - id: 28
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'C++' in bright
-    green against a black background. The screen has a slight curvature and horizontal
-    lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'C++' in bright green against
+    a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 100
 - id: 29
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'C#' in bright
-    green against a black background. The screen has a slight curvature and horizontal
-    lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'C#' in bright green against
+    a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 101
 - id: 30
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'PHP 5 & 8'
-    in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'PHP 5 & 8' in bright green
+    against a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 102
 - id: 31
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'Python 2 &
-    3' in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'Python 2 & 3' in bright
+    green against a black background. The screen has a slight curvature and horizontal
+    lines.
   timestamp: 103
 - id: 32
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'GO' in bright
-    green against a black background. The screen has a slight curvature and horizontal
-    lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'GO' in bright green against
+    a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 104
 - id: 33
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'Embedded'
-    in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'Embedded' in bright green
+    against a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 105
 - id: 34
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'SQL' in bright
-    green against a black background. The screen has a slight curvature and horizontal
-    lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'SQL' in bright green against
+    a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 106
 - id: 35
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'Kubernetes'
-    in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'Kubernetes' in bright green
+    against a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 107
 - id: 36
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'Open Shift'
-    in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'Open Shift' in bright green
+    against a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 108
 - id: 37
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'VMware' in
-    bright green against a black background. The screen has a slight curvature and
-    horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'VMware' in bright green
+    against a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 109
 - id: 38
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'Xen' in bright
-    green against a black background. The screen has a slight curvature and horizontal
-    lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'Xen' in bright green against
+    a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 110
 - id: 39
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'AWS ( EC2
-    / EKS )' in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'AWS ( EC2 / EKS )' in bright
+    green against a black background. The screen has a slight curvature and horizontal
+    lines.
   timestamp: 111
 - id: 40
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'GCP (GKE)'
-    in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'GCP (GKE)' in bright green
+    against a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 112
 - id: 41
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'Ansible Automation
-    Platform' in bright green against a black background. The screen has a slight
-    curvature and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'Ansible Automation Platform'
+    in bright green against a black background. The screen has a slight curvature
+    and horizontal lines.
   timestamp: 113
 - id: 42
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'IBM Cloudpacks'
-    in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'IBM Cloudpacks' in bright
+    green against a black background. The screen has a slight curvature and horizontal
+    lines.
   timestamp: 114
 - id: 43
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads ' KAFKA' in
-    bright green against a black background. The screen has a slight curvature and
-    horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads ' KAFKA' in bright green
+    against a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 115
 - id: 44
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'API Development'
-    in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'API Development' in bright
+    green against a black background. The screen has a slight curvature and horizontal
+    lines.
   timestamp: 116
 - id: 45
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'SOAP Development'
-    in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'SOAP Development' in bright
+    green against a black background. The screen has a slight curvature and horizontal
+    lines.
   timestamp: 117
 - id: 46
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'FPGA's' in
-    bright green against a black background. The screen has a slight curvature and
-    horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'FPGA's' in bright green
+    against a black background. The screen has a slight curvature and horizontal lines.
   timestamp: 118
 - id: 47
   length: 1
   name: Skill Showcase
   prompt: the image is centered on a computer on a desk in a robot workshop. The computer
-    is a single Blue piece, with a built in keyboard and montor, it has a green CRT
-    monitor with the centered text in a CRT-style font. The text reads 'Tons of other
-    stuff' in bright green against a black background. The screen has a slight curvature
-    and horizontal lines.
+    is a single Blue piece, with a built in keyboard and a green CRT monitor. The
+    text is centered in a CRT-style font. The text reads 'Tons of other stuff' in
+    bright green against a black background. The screen has a slight curvature and
+    horizontal lines.
   timestamp: 119
 - id: 48
   length: 6
@@ -358,8 +344,8 @@ scenes:
   length: 15
   name: READY TO HIRE
   prompt: The final scene with bold text 'READY TO HIRE' displayed in a futuristic,
-    {THEME} setting. The text appears on a holographic screen, with a backdrop of
-    a dynamic, neon-lit cityscape, signifying readiness and expertise.
+    Gothic setting. The text appears on a holographic screen, with a backdrop of a
+    dynamic, neon-lit cityscape, signifying readiness and expertise.
   timestamp: 126
 - id: 50
   length: 15
