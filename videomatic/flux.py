@@ -15,14 +15,17 @@ def flux_image(prompt,output_file):
         pipe.enable_sequential_cpu_offload() #save some VRAM by offloading the model to CPU. Remove this if you have enough GPU power
 
     print(prompt)
+    
+
     image = pipe(
         prompt,
         height=576,
         width=1024,
-        guidance_scale=3.5,
+        guidance_scale=2.5,
         output_type="pil",
         num_inference_steps=10,
         max_sequence_length=256,
         generator=torch.Generator("cpu").manual_seed(0)
     ).images[0]
     image.save(output_file)
+

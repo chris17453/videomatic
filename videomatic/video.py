@@ -10,13 +10,14 @@ def make_scenes():
     # Create a template
     s.create_template(
         name="Skill Showcase",
-        template="the image is centered on a computer on a desk in a robot workshop. The computer is a single Blue piece, with a built in keyboard and a green CRT monitor. The text is centered in a CRT-style font. The text reads '{item}' in bright green against a black background. The screen has a slight curvature and horizontal lines.",
+        #template=" in a robot workshop. The computer is a single Blue piece, with a built in keyboard and a green CRT monitor. The text is centered in a CRT-style font. The text reads '{item}' in bright green against a black screen, contained by the montior. it has a slight curvature and horizontal lines",
+        template="Centered on a computer on a desk, in a robot workshop. A blue computer with a keyboard and green CRT monitor displays '{item}' in green 8bit pixelated text on a black screen, with slight curvature and horizontal scan lines.",
         duration=1
     )
     # List of skills
     skills = [
-        "C", "C++", "C#", "PHP 5 & 8", "Python 2 & 3", "GO", "Embedded", "SQL",
-        "Kubernetes","Open Shift", "VMware", "Xen", "AWS ( EC2 / EKS )", "GCP (GKE)", 
+        "C", "C++", "C#", "PHP", "Python", "GO", "Embedded", "SQL",
+        "Kubernetes","Open Shift", "VMware", "Xen", "AWS ( EC2 / EKS )", "GCP ( GKE )", 
         "Ansible Automation Platform", "IBM Cloudpacks"," KAFKA", 
         "API Development", "SOAP Development", "FPGA's", "Tons of other stuff"
     ]
@@ -53,10 +54,11 @@ def make_scenes():
     # Create scenes using the template
     s.create_scenes_from_template(skills, "Skill Showcase")
     s.add_scene("Future Vision", 6, f"an ocean view with a spacesuited figure floating holding a road sign that says  all you need is Watkins ")
-    s.add_scene("READY TO HIRE", 15, f"The final scene with bold text 'READY TO HIRE' displayed in a futuristic, {THEME} setting. The text appears on a holographic screen, with a backdrop of a dynamic, neon-lit cityscape, signifying readiness and expertise.")
+    s.add_scene("READY TO HIRE", 15, f"The final scene with bold text 'READY TO HIRE' displayed in a futuristic, {THEME} setting. The text appears on a holographic screen, with a backdrop of a apocolyptic cityscape")
     s.add_scene("Watkins", 15,None)
     
 
+    s.update_metadata()
 
     # Save the scenes to a YAML file
     s.save()

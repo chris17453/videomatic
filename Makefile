@@ -1,17 +1,17 @@
 
 
-build:
+# builds a single video from video fragments and adds audio track
+build: frames videos reformat
 	@python -m videomatic.cli build
 
-send_frames:
-	scp  data/frames/*.png gpu2.watkinslabs.com:/home/nd/frames/
-	ssh -t gpu2.watkinslabs.com "bash -c 'sudo rm -rf /home/ai-services/apps/comfyui/input/* && sudo mv /home/nd/frames/*.png   /home/ai-services/apps/comfyui/input/ && sudo chown ai-services:www-data /home/ai-services/apps/comfyui/input/'"
+# creates image frames used for video creation
+frames:
+	@python -m videomatic.cli create_frames
 
-get_vids:
-	ssh -t gpu2.watkinslabs.com "sudo cp -r /home/ai-services/apps/comfyui/output/ /home/nd/ && sudo chown nd:nd /home/nd/output"
-	scp   gpu2.watkinslabs.com:/home/nd/output/*.webm data/videos/
+# creates video fragments
+videos:
+	@python -m videomatic.cli create_videos
 
-# not used
-stitch:
-	ffmpeg -f concat -safe 0 -i data/videos/stitch.txt -c copy data/combined.mp4
-
+# Stretches and interploats fragments
+reformat:
+	@python -m videomatic.cli reformat_video

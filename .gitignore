@@ -1,3 +1,6 @@
 *.webm
 temp
 __pycache__
+data/audio
+data/videos
+data/frames

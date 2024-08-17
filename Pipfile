@@ -15,6 +15,7 @@ diffusers = "*"
 opencv-python = "*"
 omegaconf = "*"
 ffmpeg = "*"
+pillow = "*"
 
 [dev-packages]
 

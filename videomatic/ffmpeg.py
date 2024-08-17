@@ -29,7 +29,8 @@ def stretch_video(input_file, output_file, dest_length):
     # Use ffmpeg to stretch the video
     subprocess.run([
         'ffmpeg', '-y' ,'-i', input_file,
-        '-filter:v', f'setpts={1/stretch_factor}*PTS',
+        '-filter_complex', f"[0:v]setpts={1/stretch_factor}*PTS,fps=24,minterpolate=fps=24",
+#        '-filter:v', f'setpts={1/stretch_factor}*PTS',
         '-an', output_file
     ], check=True)
 

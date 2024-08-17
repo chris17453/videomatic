@@ -1,0 +1,828 @@
+scenes:
+- frame:
+    output_path: data/frames/frame_0001.png
+  id: 1
+  length: 6
+  name: Opening
+  prompt: A dark moonlight sky decending upon an remote woods, the moon is large and
+    blood red
+  timestamp: 0
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0001.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0001.mp4
+- frame:
+    output_path: data/frames/frame_0002.png
+  id: 2
+  length: 6
+  name: Home
+  prompt: A Gothic-inspired long techno gypsy wagon home nestled deep in the woods,
+    illuminated by candels and surrounded by glowing cables
+  timestamp: 6
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0002.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0002.mp4
+- frame:
+    output_path: data/frames/frame_0003.png
+  id: 3
+  length: 3
+  name: Close-Up
+  prompt: A wide shot of an middle aged man with a short grey beard and wild brown
+    grey hair  typing on a sleek, futuristic computer. The setting is infused with
+    Gothic  and a slight haze in the air.
+  timestamp: 12
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0003.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0003.mp4
+- frame:
+    output_path: data/frames/frame_0004.png
+  id: 4
+  length: 3
+  name: Beginnings
+  prompt: A closeup of a paper note with a hand holding a pencil that says  watkins=new
+    beginnings();
+  timestamp: 15
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0004.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0004.mp4
+- frame:
+    output_path: data/frames/frame_0005.png
+  id: 5
+  length: 3
+  name: Whiteboard
+  prompt: A Gothic-themed classroom where a an middle aged man with a short grey beard
+    and wild brown grey hair  writes code on a digital whiteboard. The room is bathed
+    in neon lights, with holographic elements floating around, and futuristic gadgets
+    scattered on the desks.
+  timestamp: 18
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0005.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0005.mp4
+- frame:
+    output_path: data/frames/frame_0006.png
+  id: 6
+  length: 3
+  name: Dark Shadow
+  prompt: A dark hall with the silouette  of a person
+  timestamp: 21
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0006.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0006.mp4
+- frame:
+    output_path: data/frames/frame_0007.png
+  id: 7
+  length: 4
+  name: Hire 1
+  prompt: 'On a field of grass a billboard, says Hire Watkins for Architect.  '
+  timestamp: 24
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0007.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0007.mp4
+- frame:
+    output_path: data/frames/frame_0008.png
+  id: 8
+  length: 3
+  name: Team Meeting
+  prompt: an middle aged man with a short grey beard and wild brown grey hair  in
+    a team meeting, surrounded by holographic screens and neon-lit walls. The team
+    is engaged in a high-tech discussion, with a futuristic cityscape visible through
+    the large windows.
+  timestamp: 28
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0008.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0008.mp4
+- frame:
+    output_path: data/frames/frame_0009.png
+  id: 9
+  length: 4
+  name: Hire 2
+  prompt: set on the moon, A billboard that says Hire Watkins for Code.
+  timestamp: 31
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0009.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0009.mp4
+- frame:
+    output_path: data/frames/frame_0010.png
+  id: 10
+  length: 3
+  name: Late Work
+  prompt: "an middle aged man with a short grey beard and wild brown grey hair  working\
+    \ late into the night in a Gothic-themed workspace. The room is dimly lit, with\
+    \ neon lights reflecting off the metal surfaces, and the city\u2019s neon skyline\
+    \ visible through a large window."
+  timestamp: 35
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0010.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0010.mp4
+- frame:
+    output_path: data/frames/frame_0011.png
+  id: 11
+  length: 3
+  name: CODE AWAITS
+  prompt: 'A closeup of a paper note being  placed on a refridgerator that func async
+    code(){  awaits; } '
+  timestamp: 38
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0011.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0011.mp4
+- frame:
+    output_path: data/frames/frame_0012.png
+  id: 12
+  length: 6
+  name: Celebration
+  prompt: "A high-energy celebration after success. The scene features a futuristic\
+    \ setting with holographic confetti, neon lights, and a digital display showing\
+    \ the project\u2019s success"
+  timestamp: 41
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0012.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0012.mp4
+- frame:
+    output_path: data/frames/frame_0013.png
+  id: 13
+  length: 4
+  name: Hire 3
+  prompt: ' n a bus. A Sign that says Hire Watkins for Team Lead.'
+  timestamp: 47
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0013.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0013.mp4
+- frame:
+    output_path: data/frames/frame_0014.png
+  id: 14
+  length: 3
+  name: Dark Coder
+  prompt: A dark room with the close up of a silouette of a person coding in a chair
+    being outlined by a computer monitor fuill of code
+  timestamp: 51
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0014.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0014.mp4
+- frame:
+    output_path: data/frames/frame_0015.png
+  id: 15
+  length: 3
+  name: Achievement
+  prompt: WATKINS for the win. Written in ink on a wall. people cheering, in a Gothic
+    environment
+  timestamp: 54
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0015.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0015.mp4
+- frame:
+    output_path: data/frames/frame_0016.png
+  id: 16
+  length: 4
+  name: Hire 4
+  prompt: an old on a Floppy Disk on a desk,  that says Hire Watkins for Legacy code
+  timestamp: 57
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0016.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0016.mp4
+- frame:
+    output_path: data/frames/frame_0017.png
+  id: 17
+  length: 3
+  name: Focus
+  prompt: A focused shot of an middle aged man with a short grey beard and wild brown
+    grey hair  concentrating intensely on a complex task. The scene is set in a Gothic
+    workspace, with the glow of monitors and neon lights reflecting off the developer's
+    determined face.
+  timestamp: 61
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0017.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0017.mp4
+- frame:
+    output_path: data/frames/frame_0018.png
+  id: 18
+  length: 3
+  name: Digital
+  prompt: 'A close up of electricity ignighting a computer on fire blue. '
+  timestamp: 64
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0018.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0018.mp4
+- frame:
+    output_path: data/frames/frame_0019.png
+  id: 19
+  length: 4
+  name: Hire 5
+  prompt: Written with rags on the floor. A Sign that says Hire Watkins for RAG Systems.
+  timestamp: 67
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0019.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0019.mp4
+- frame:
+    output_path: data/frames/frame_0020.png
+  id: 20
+  length: 3
+  name: Tools
+  prompt: A montage of different programming languages, cobol, pascal, python, visual
+    basic, lula on a wall under a bridge
+  timestamp: 71
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0020.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0020.mp4
+- frame:
+    output_path: data/frames/frame_0021.png
+  id: 21
+  length: 3
+  name: Project
+  prompt: 'an middle aged man with a short grey beard and wild brown grey hair  presenting
+    a project in a Gothic boardroom, with holographic displays showing the project
+    details. '
+  timestamp: 74
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0021.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0021.mp4
+- frame:
+    output_path: data/frames/frame_0022.png
+  id: 22
+  length: 4
+  name: Hire 6
+  prompt: in the sand in written in water. Sign that says Hire Watkins for AI Models
+    .
+  timestamp: 77
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0022.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0022.mp4
+- frame:
+    output_path: data/frames/frame_0023.png
+  id: 23
+  length: 3
+  name: Fast-Paced
+  prompt: An intense coding scene where lines of code rapidly appear on multiple screens
+    in a Gothic environment. The room is dark, with neon lights reflecting off the
+    screens, creating a sense of urgency.
+  timestamp: 81
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0023.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0023.mp4
+- frame:
+    output_path: data/frames/frame_0024.png
+  id: 24
+  length: 3
+  name: Meetings
+  prompt: A room of very happy developers with arms raised with a sign that says WE
+    DID IT.
+  timestamp: 84
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0024.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0024.mp4
+- frame:
+    output_path: data/frames/frame_0025.png
+  id: 25
+  length: 6
+  name: OUTERSPACE
+  prompt: A 1980's IBM Keyboard floating in space.
+  timestamp: 87
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0025.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0025.mp4
+- frame:
+    output_path: data/frames/frame_0026.png
+  id: 26
+  length: 6
+  name: Adaptability
+  prompt: in a Gothic room. The an middle aged man with a short grey beard and wild
+    brown grey hair  is shown using tools to build a robot
+  timestamp: 93
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0026.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0026.mp4
+- frame:
+    output_path: data/frames/frame_0027.png
+  id: 27
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'C' in green 8bit pixelated text on
+    a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 99
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0027.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0027.mp4
+- frame:
+    output_path: data/frames/frame_0028.png
+  id: 28
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'C++' in green 8bit pixelated text on
+    a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 100
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0028.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0028.mp4
+- frame:
+    output_path: data/frames/frame_0029.png
+  id: 29
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'C#' in green 8bit pixelated text on
+    a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 101
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0029.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0029.mp4
+- frame:
+    output_path: data/frames/frame_0030.png
+  id: 30
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'PHP' in green 8bit pixelated text on
+    a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 102
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0030.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0030.mp4
+- frame:
+    output_path: data/frames/frame_0031.png
+  id: 31
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'Python' in green 8bit pixelated text
+    on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 103
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0031.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0031.mp4
+- frame:
+    output_path: data/frames/frame_0032.png
+  id: 32
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'GO' in green 8bit pixelated text on
+    a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 104
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0032.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0032.mp4
+- frame:
+    output_path: data/frames/frame_0033.png
+  id: 33
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'Embedded' in green 8bit pixelated text
+    on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 105
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0033.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0033.mp4
+- frame:
+    output_path: data/frames/frame_0034.png
+  id: 34
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'SQL' in green 8bit pixelated text on
+    a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 106
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0034.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0034.mp4
+- frame:
+    output_path: data/frames/frame_0035.png
+  id: 35
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'Kubernetes' in green 8bit pixelated
+    text on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 107
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0035.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0035.mp4
+- frame:
+    output_path: data/frames/frame_0036.png
+  id: 36
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'Open Shift' in green 8bit pixelated
+    text on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 108
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0036.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0036.mp4
+- frame:
+    output_path: data/frames/frame_0037.png
+  id: 37
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'VMware' in green 8bit pixelated text
+    on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 109
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0037.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0037.mp4
+- frame:
+    output_path: data/frames/frame_0038.png
+  id: 38
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'Xen' in green 8bit pixelated text on
+    a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 110
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0038.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0038.mp4
+- frame:
+    output_path: data/frames/frame_0039.png
+  id: 39
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'AWS ( EC2 / EKS )' in green 8bit pixelated
+    text on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 111
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0039.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0039.mp4
+- frame:
+    output_path: data/frames/frame_0040.png
+  id: 40
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'GCP ( GKE )' in green 8bit pixelated
+    text on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 112
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0040.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0040.mp4
+- frame:
+    output_path: data/frames/frame_0041.png
+  id: 41
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'Ansible Automation Platform' in green
+    8bit pixelated text on a black screen, with slight curvature and horizontal scan
+    lines.
+  timestamp: 113
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0041.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0041.mp4
+- frame:
+    output_path: data/frames/frame_0042.png
+  id: 42
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'IBM Cloudpacks' in green 8bit pixelated
+    text on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 114
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0042.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0042.mp4
+- frame:
+    output_path: data/frames/frame_0043.png
+  id: 43
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays ' KAFKA' in green 8bit pixelated text
+    on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 115
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0043.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0043.mp4
+- frame:
+    output_path: data/frames/frame_0044.png
+  id: 44
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'API Development' in green 8bit pixelated
+    text on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 116
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0044.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0044.mp4
+- frame:
+    output_path: data/frames/frame_0045.png
+  id: 45
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'SOAP Development' in green 8bit pixelated
+    text on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 117
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0045.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0045.mp4
+- frame:
+    output_path: data/frames/frame_0046.png
+  id: 46
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'FPGA's' in green 8bit pixelated text
+    on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 118
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0046.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0046.mp4
+- frame:
+    output_path: data/frames/frame_0047.png
+  id: 47
+  length: 1
+  name: Skill Showcase
+  prompt: Centered on a computer on a desk, in a robot workshop. A blue computer with
+    a keyboard and green CRT monitor displays 'Tons of other stuff' in green 8bit
+    pixelated text on a black screen, with slight curvature and horizontal scan lines.
+  timestamp: 119
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0047.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0047.mp4
+- frame:
+    output_path: data/frames/frame_0048.png
+  id: 48
+  length: 6
+  name: Future Vision
+  prompt: 'an ocean view with a spacesuited figure floating holding a road sign that
+    says  all you need is Watkins '
+  timestamp: 120
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0048.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0048.mp4
+- frame:
+    output_path: data/frames/frame_0049.png
+  id: 49
+  length: 15
+  name: READY TO HIRE
+  prompt: The final scene with bold text 'READY TO HIRE' displayed in a futuristic,
+    Gothic setting. The text appears on a holographic screen, with a backdrop of a
+    apocolyptic cityscape
+  timestamp: 126
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0049.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0049.mp4
+- frame:
+    output_path: data/frames/frame_0050.png
+  id: 50
+  length: 15
+  name: Watkins
+  prompt: null
+  timestamp: 141
+  video:
+    decode_chunk_size: 8
+    fps: 8
+    motion_bucket_id: 10
+    noise_aug_strength: 0.1
+    output_path: data/videos/video_0050.mp4
+    seed: 42
+    temp_output_path: data/videos/temp/video_0050.mp4
+total_length: 156
