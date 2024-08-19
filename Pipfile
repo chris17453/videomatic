@@ -16,6 +16,9 @@ opencv-python = "*"
 omegaconf = "*"
 ffmpeg = "*"
 pillow = "*"
+flask = "*"
+psycopg2-binary = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

@@ -4,3 +4,6 @@ __pycache__
 data/audio
 data/videos
 data/frames
+.env
+.flort
+.png

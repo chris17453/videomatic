@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Test</title>
+</head>
+<body>
+    <h1>Video Test</h1>
+    <video id="videoPlayer" controls width="100%">
+        <source src="{{ url_for('serve_video', scene_id=scene_id) }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="debug"></div>
+    <button onclick="reloadVideo()">Reload Video</button>
+
+    <script>
+    var video = document.getElementById('videoPlayer');
+    var debugDiv = document.getElementById('debug');
+
+    function updateDebug() {
+        debugDiv.innerHTML = `
+            Duration: ${video.duration}<br>
+            Current Time: ${video.currentTime}<br>
+            Paused: ${video.paused}<br>
+            Ended: ${video.ended}<br>
+            Network State: ${video.networkState} (${getNetworkStateText(video.networkState)})<br>
+            Ready State: ${video.readyState} (${getReadyStateText(video.readyState)})<br>
+            Error: ${video.error ? `${video.error.code} - ${getErrorText(video.error.code)}` : 'None'}<br>
+            Video URL: ${video.currentSrc}<br>
+        `;
+    }
+
+    function getNetworkStateText(state) {
+        const states = ['NETWORK_EMPTY', 'NETWORK_IDLE', 'NETWORK_LOADING', 'NETWORK_NO_SOURCE'];
+        return states[state];
+    }
+
+    function getReadyStateText(state) {
+        const states = ['HAVE_NOTHING', 'HAVE_METADATA', 'HAVE_CURRENT_DATA', 'HAVE_FUTURE_DATA', 'HAVE_ENOUGH_DATA'];
+        return states[state];
+    }
+
+    function getErrorText(code) {
+        const errors = {
+            1: 'MEDIA_ERR_ABORTED',
+            2: 'MEDIA_ERR_NETWORK',
+            3: 'MEDIA_ERR_DECODE',
+            4: 'MEDIA_ERR_SRC_NOT_SUPPORTED'
+        };
+        return errors[code] || 'UNKNOWN_ERROR';
+    }
+
+    function reloadVideo() {
+        var source = video.getElementsByTagName('source')[0];
+        var originalSrc = source.src;
+        source.src = '';
+        video.load();
+        source.src = originalSrc + '?t=' + new Date().getTime();
+        video.load();
+    }
+
+    video.addEventListener('loadedmetadata', updateDebug);
+    video.addEventListener('timeupdate', updateDebug);
+    video.addEventListener('error', function() {
+        debugDiv.innerHTML += `Error: ${video.error.code} - ${getErrorText(video.error.code)}<br>`;
+    });
+
+    // Check video status every second
+    setInterval(updateDebug, 1000);
+    </script>
+</body>
+</html>

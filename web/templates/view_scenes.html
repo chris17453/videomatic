@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}View Scenes - Videomatic{% endblock %}
+
+{% block content %}
+<div class="bx--grid bx--grid--full-width">
+    <div class="bx--row bx--row--condensed">
+        <div class="bx--col-lg-12 bx--col-md-8 bx--col-sm-12">
+            <h1 class="bx--type-expressive-heading-03">View Scenes</h1>
+            {% if scenes %}
+            <div class="bx--data-table-container">
+                <table class="bx--data-table bx--data-table--zebra bx--data-table--compact">
+                    <thead>
+                        <tr>
+                            <th class="bx--table-header-label">Name</th>
+                            <th class="bx--table-header-label">Length</th>
+                            <th class="bx--table-header-label">Prompt</th>
+                            <th class="bx--table-header-label">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for scene in scenes %}
+                        <tr>
+                            <td>{{ scene.get('name', 'Unnamed Scene') }}</td>
+                            <td>{{ scene.get('length', 0) }} s</td>
+                            <td>
+                                {% if scene.get('prompt') %}
+                                    {{ scene['prompt'][:50] }}{% if scene['prompt']|length > 50 %}...{% endif %}
+                                {% else %}
+                                    No prompt available
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('view_scene', scene_id=loop.index) }}" class="bx--btn bx--btn--primary bx--btn--sm">View/Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="bx--type-body-long-01">No scenes available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

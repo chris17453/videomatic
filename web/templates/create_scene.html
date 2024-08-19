@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Create Scene - Videomatic{% endblock %}
+
+{% block content %}
+<div class="bx--grid bx--grid--full-width">
+    <div class="bx--row bx--row--condensed">
+        <div class="bx--col-lg-8 bx--col-md-6 bx--col-sm-12">
+            <h1 class="bx--type-beta bx--spacing">Create a New Scene</h1>
+            <form method="POST">
+                <div class="bx--form-item bx--spacing">
+                    <label for="name" class="bx--label">Scene Name:</label>
+                    <input type="text" class="bx--text-input" id="name" name="name" required>
+                </div>
+                
+                <div class="bx--form-item bx--spacing">
+                    <label for="length" class="bx--label">Scene Length (seconds):</label>
+                    <input type="number" class="bx--text-input" id="length" name="length" step="0.1" required>
+                </div>
+                
+                <div class="bx--form-item bx--spacing">
+                    <label for="prompt" class="bx--label">Prompt:</label>
+                    <textarea class="bx--text-area" id="prompt" name="prompt" rows="3" required></textarea>
+                    <div class="bx--form__helper-text">
+                        <p>Provide a detailed description of the scene. Mention key elements such as characters, setting, and any specific actions or moods you want to capture.</p>
+                    </div>
+                </div>
+                
+                <button type="submit" class="bx--btn bx--btn--primary bx--spacing">Create Scene</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

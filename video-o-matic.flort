@@ -1,0 +1,1180 @@
+Florted: 2024-08-19 19:09:00
+|-- videomatic/
+|   |-- queue.py
+|   |-- svd.py
+|   |-- flux.py
+|   |-- scene.py
+|   |-- video.py
+|   |-- ffmpeg.py
+|   |-- __init__.py
+|   |-- cli.py
+|-- web/
+|   |-- app.py
+|-- containers/
+|   |-- init.sql
+
+Path: videomatic/queue.py
+File: queue.py
+-------
+import os
+import json
+import time
+import psycopg2
+from datetime import datetime
+from psycopg2.extras import RealDictCursor
+from .flux import flux_image
+from .svd import generate_video
+
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Database connection parameters
+DB_PARAMS = {
+    "dbname": os.getenv("POSTGRES_DB", "media_queue"),
+    "user": os.getenv("POSTGRES_USER", "queueuser"),
+    "password": os.getenv("POSTGRES_PASSWORD", "queuepass"),
+    "host": os.getenv("DB_HOST", "localhost"),
+    "port": os.getenv("DB_PORT", "5432")
+}
+
+def connect_to_db():
+    return psycopg2.connect(**DB_PARAMS)
+
+def get_next_item(conn):
+    with conn.cursor() as cur:
+        # First, check if there's any item in progress
+        cur.execute("SELECT COUNT(*) FROM queue WHERE status = 'in_progress'")
+        in_progress_count = cur.fetchone()[0]
+        
+        if in_progress_count > 0:
+            return None  # There's an item in progress, so we can't process a new one
+
+        # If no item is in progress, get the next pending item
+        cur.execute("""
+            SELECT id, user_id, media_type, generation_parameters
+            FROM queue
+            WHERE status = 'pending'
+            ORDER BY priority DESC, submitted_at ASC
+            LIMIT 1
+            FOR UPDATE SKIP LOCKED
+        """)
+        item = cur.fetchone()
+        if item:
+            cur.execute("UPDATE queue SET status = 'in_progress', started_at = NOW() WHERE id = %s", (item[0],))
+        conn.commit()
+        return item
+
+def process_item(item):
+    item_id, user_id, media_type, params = item
+    
+    print(f"Type of params in process_item: {type(params)}")  # Add this line
+    print(f"Content of params in process_item: {params}")  # Add this line
+
+    # If params is already a dict, use it directly
+    if isinstance(params, dict):
+        params_dict = params
+    # If it's a string, try to parse it as JSON
+    elif isinstance(params, str):
+        try:
+            params_dict = json.loads(params)
+        except json.JSONDecodeError:
+            return None, "Invalid JSON in generation parameters"
+    else:
+        return None, f"Unexpected type for generation parameters: {type(params)}"
+
+    print(f"Processing item {item_id}: {media_type} for user {user_id}")
+    print(f"Parameters: {params_dict}")
+    
+    try:
+        if media_type == 'image':
+            filename = params_dict.get('output_file', f"generated_image_{datetime.now().strftime('%Y%m%d%H%M%S')}.png")
+            flux_image(prompt=params_dict['prompt'], output_file=filename)
+        elif media_type == 'video':
+            filename = params_dict.get('output_file', f"generated_video_{datetime.now().strftime('%Y%m%d%H%M%S')}.mp4")
+            generate_video(
+                image_path=params_dict['frame_path'],
+                output_file=filename,
+                seed=params_dict.get('seed', 42),
+                decode_chunk_size=params_dict.get('decode_chunk_size', 8),
+                motion_bucket_id=params_dict.get('motion_bucket_id', 10),
+                noise_aug_strength=params_dict.get('noise_aug_strength', 0.1),
+                fps=params_dict.get('fps', 8)
+            )
+        else:
+            raise ValueError(f"Unsupported media type: {media_type}")
+        
+        return filename, None
+    except Exception as e:
+        return None, str(e)
+
+def complete_item(conn, item_id, filename, error_message):
+    with conn.cursor() as cur:
+        if error_message:
+            cur.execute("""
+                UPDATE queue
+                SET status = 'error', completed_at = NOW(),
+                    time_taken = completed_at - started_at,
+                    error_message = %s
+                WHERE id = %s
+            """, (error_message, item_id))
+        else:
+            cur.execute("""
+                UPDATE queue
+                SET status = 'completed', completed_at = NOW(),
+                    time_taken = completed_at - started_at,
+                    result_file = %s
+                WHERE id = %s
+            """, (filename, item_id))
+    conn.commit()
+
+def main():
+    conn = connect_to_db()
+    try:
+        while True:
+            item = get_next_item(conn)
+            if item:
+                filename, error = process_item(item)
+                complete_item(conn, item[0], filename, error)
+                if error:
+                    print(f"Error processing item {item[0]}: {error}")
+                else:
+                    print(f"Completed item {item[0]}, result: {filename}")
+            else:
+                print("No items to process at the moment. Waiting...")
+                time.sleep(10)
+    finally:
+        conn.close()
+
+
+def add_to_queue(conn, user_id, media_type, generation_parameters, priority=3):
+    with conn.cursor() as cur:
+        # Convert generation_parameters to JSON string if it's not already
+        if not isinstance(generation_parameters, str):
+            generation_parameters = json.dumps(generation_parameters)
+        
+        cur.execute("""
+            INSERT INTO queue (user_id, media_type, generation_parameters, status, priority)
+            VALUES (%s, %s, %s, 'pending', %s)
+            RETURNING id
+        """, (user_id, media_type, generation_parameters, priority))
+        queue_id = cur.fetchone()[0]
+    conn.commit()
+    return queue_id
+
+
+def get_queue_status(conn, queue_id):
+    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+        cur.execute("SELECT * FROM queue WHERE id = %s", (queue_id,))
+        return cur.fetchone()
+
+def update_queue_status(conn, queue_id, status, result_file=None, error_message=None):
+    with conn.cursor() as cur:
+        if status == 'completed':
+            cur.execute("""
+                UPDATE queue
+                SET status = %s, completed_at = %s, result_file = %s,
+                    time_taken = completed_at - started_at
+                WHERE id = %s
+            """, (status, datetime.now(), result_file, queue_id))
+        elif status == 'error':
+            cur.execute("""
+                UPDATE queue
+                SET status = %s, completed_at = %s, error_message = %s,
+                    time_taken = completed_at - started_at
+                WHERE id = %s
+            """, (status, datetime.now(), error_message, queue_id))
+        else:
+            cur.execute("""
+                UPDATE queue
+                SET status = %s, started_at = %s
+                WHERE id = %s
+            """, (status, datetime.now(), queue_id))
+    conn.commit()        
+
+if __name__ == "__main__":
+    main()
+
+Path: videomatic/svd.py
+File: svd.py
+-------
+import os
+import torch
+from diffusers import StableVideoDiffusionPipeline
+#from diffusers.utils import export_to_video
+from PIL import Image
+from .ffmpeg import frames_to_video
+
+model_path = "/home/nd/ai/stable-video-diffusion-img2vid-xt"
+video_pipe=None
+
+
+def generate_video(image_path, output_file, seed=42, decode_chunk_size=8, motion_bucket_id=10, noise_aug_strength=0.1, fps=8):
+    global video_pipe
+    # Check if model path exists
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model path does not exist: {model_path}")
+
+    # Check if image file exists
+    if not os.path.isfile(image_path):
+        raise FileNotFoundError(f"Image file does not exist: {image_path}")
+    
+    # Load the model
+    try:
+        if video_pipe==None:
+            video_pipe = StableVideoDiffusionPipeline.from_pretrained(
+                model_path, torch_dtype=torch.float16, variant="fp16"
+            )
+            video_pipe.enable_model_cpu_offload()
+
+    except Exception as e:
+        raise RuntimeError(f"Failed to load model: {e}")
+
+    # Load the conditioning image using PIL
+    try:
+        image = Image.open(image_path)
+        image = image.resize((1024, 576))
+    except Exception as e:
+        raise RuntimeError(f"Failed to load or process image: {e}")
+
+    # Generate the video
+    try:
+        generator = torch.manual_seed(seed)
+        frames = video_pipe(
+            image, 
+            decode_chunk_size=decode_chunk_size, 
+            generator=generator, 
+            motion_bucket_id=motion_bucket_id, 
+            noise_aug_strength=noise_aug_strength
+        ).frames[0]
+        frames_to_video(frames, output_file, fps=fps)
+
+    except Exception as e:
+        raise RuntimeError(f"Failed to generate video: {e}")
+
+    print(f"Video successfully generated: {output_file}")
+
+Path: videomatic/flux.py
+File: flux.py
+-------
+import torch
+from diffusers import FluxPipeline
+
+model_path="/home/nd/ai/FLUX.1-schnell"
+#model_path="/home/nd/ai/flux-fp8/"
+pipe = None
+
+
+
+def flux_image(prompt,output_file):
+    global pipe
+    if pipe==None:
+        pipe = FluxPipeline.from_pretrained(model_path, torch_dtype=torch.bfloat16)
+        #pipe.enable_model_cpu_offload() #save some VRAM by offloading the model to CPU. Remove this if you have enough GPU power
+        pipe.enable_sequential_cpu_offload() #save some VRAM by offloading the model to CPU. Remove this if you have enough GPU power
+
+    print(prompt)
+    
+
+    image = pipe(
+        prompt,
+        height=576,
+        width=1024,
+        guidance_scale=2.5,
+        output_type="pil",
+        num_inference_steps=10,
+        max_sequence_length=256,
+        generator=torch.Generator("cpu").manual_seed(0)
+    ).images[0]
+    image.save(output_file)
+
+
+Path: videomatic/scene.py
+File: scene.py
+-------
+import os
+import yaml
+from .flux import flux_image
+from .ffmpeg import get_video_length, stretch_video, combine_videos, add_audio_to_video
+from .svd import generate_video
+import subprocess
+
+class Scene:
+    def __init__(self, base_dir,audio=None):
+        self.base_dir =os.path.join(base_dir,'bucket')
+        self.scene_dir =self.base_dir 
+        self.frame_dir=os.path.join(self.base_dir ,"frames")
+        self.video_dir=os.path.join(self.base_dir ,"videos")
+        self.audio_dir=os.path.join(self.base_dir ,"audio")
+        if audio:
+            self.audio=os.path.join(self.audio_dir,audio)
+        else: 
+            self.audio=None
+        self.scenes = []
+        self.total_length = 0
+        self.templates=[]
+        self.video={}
+  
+        # Create directories if they don't exist
+        self.create_directories()
+
+    def create_directories(self):
+        os.makedirs(self.scene_dir, exist_ok=True)
+        os.makedirs(self.frame_dir, exist_ok=True)
+        os.makedirs(self.video_dir, exist_ok=True)
+        os.makedirs(self.audio_dir, exist_ok=True)        
+
+    def add_scene(self, name, length, prompt, timestamp=None,motion=10):
+        if timestamp is None:
+            timestamp = self.total_length
+        
+        scene = {
+            "name": name,
+            "length": length,
+            "prompt": prompt,
+            "timestamp": timestamp,
+            'video': { 'motion_bucket_id': motion}
+        }
+        self.scenes.append(scene)
+        self.scenes.sort(key=lambda x: x["timestamp"])  # Sort scenes by timestamp
+        self._update_timestamps_and_total_length()
+
+    def _update_timestamps_and_total_length(self):
+        self.total_length = 0
+        current_timestamp = 0
+        for i, scene in enumerate(self.scenes, start=1):
+            scene["id"] = i
+            scene["timestamp"] = current_timestamp
+            current_timestamp += scene["length"]
+            self.total_length += scene["length"]
+
+    def get_scenes(self):
+        return self.scenes
+
+    def save(self, filename="scenes.yaml"):
+        with open(os.path.join(self.scene_dir, filename), 'w') as file:
+            yaml.dump({
+                "scenes": self.scenes,
+                "total_length": self.total_length,
+                "audio":self.audio,
+                "video":self.video
+            }, file)
+
+    def load(self, filename="scenes.yaml"):
+        with open(os.path.join(self.scene_dir, filename), 'r') as file:
+            data = yaml.safe_load(file)
+            self.scenes = data.get("scenes", [])
+            self.total_length = data.get("total_length", 0)
+            self._update_timestamps_and_total_length()
+            self.audio= data.get("audio", [])
+            self.video= data.get("video", [])
+
+
+    def create_template(self, name, template, duration=6,motion=10):
+        tpl = {
+            'name': name,
+            'template': template,
+            'duration': duration,
+            'motion': motion
+        }
+        self.templates.append(tpl)
+
+    def get_template_by_name(self, name):
+        for template in self.templates:
+            if template['name'] == name:
+                return template
+        return None
+
+    def create_scenes_from_template(self, data, template_name, start_time=0):
+        template = self.get_template_by_name(template_name)
+        if not template:
+            raise ValueError(f"Template '{template_name}' not found.")
+        
+        duration = template['duration']
+        if start_time==0:
+            start_time=self.total_length
+
+        timestamp = start_time
+        
+        for item in data:
+            prompt_tpl = template['template'].format(item=item)
+            self.add_scene(template_name, duration, prompt_tpl, timestamp,motion=template['motion'])
+            timestamp += duration
+
+
+    def correct_fragments(self, redo=False, indexes=None):
+        for scene in self.scenes:
+            if  os.path.exists(scene['video']['temp_output_path']):
+                continue
+            stretch_video(scene['video']['output_path'], scene['video']['temp_output_path'],scene['length'])
+
+
+    def build_video(self):
+        files=[]
+        for scene in self.scenes:
+            files.append(scene['video']['temp_output_path'])
+    
+        combine_videos(files,self.video['combined'])
+        if self.audio:
+            add_audio_to_video(self.video['combined'],self.audio,self.video['final'])
+
+    
+        
+    def create_fragments(self, output_type="frames", redo=False, indexes=None):
+        if not os.path.exists(self.frame_dir):
+            os.makedirs(self.frame_dir)
+        
+        for scene in self.scenes:
+            if scene['prompt'] is None:
+                continue
+
+            if not redo:
+                if output_type=='frames' and os.path.exists(scene['frame']['output_path']):
+                    continue
+                if output_type=='video' and os.path.exists(scene['video']['output_path']):
+                    continue
+            try:
+                if output_type == "frames":
+                    flux_image(prompt=scene['prompt'], output_file=scene['frame']['output_path'])
+                elif output_type == "video":
+                    generate_video( image_path        = scene['frame']['output_path'], 
+                                    output_file       = scene['video']['output_path'], 
+                                    seed              = scene['video']['seed'], 
+                                    decode_chunk_size = scene['video']['decode_chunk_size'],
+                                    motion_bucket_id  = scene['video']['motion_bucket_id'],
+                                    noise_aug_strength= scene['video']['noise_aug_strength'],
+                                    fps               = scene['video']['fps'])
+                        
+            except Exception as e:
+                print(f"Failed to generate {output_type} for scene {scene['id']}: {e}")
+
+
+    def update_metadata(self):
+        output_file =  os.path.join(self.base_dir, f"videomatic.mp4")
+        output_file2 =  os.path.join(self.base_dir, f"videomatic-a.mp4")
+        self.video['combined'] = output_file
+        self.video['final'] = output_file2
+
+        for scene in self.scenes:
+            image_path = os.path.join(self.frame_dir, f"frame_{scene['id']:04d}.png")
+            video_path = os.path.join(self.video_dir, f"video_{scene['id']:04d}.mp4")
+            temp_video_path = os.path.join(self.video_dir,'temp', f"video_{scene['id']:04d}.mp4")
+            scene['frame']={}
+            scene['frame']['output_path']=image_path
+            #scene['video']={}
+            scene['video']['output_path']=video_path
+            scene['video']['temp_output_path']=temp_video_path
+            scene['video']['seed']=42
+            scene['video']['decode_chunk_size']=8
+            #scene['video']['motion_bucket_id']=10
+            scene['video']['noise_aug_strength']=0.1
+            scene['video']['fps']=8
+                        
+
+
+                
+Path: videomatic/video.py
+File: video.py
+-------
+from .scene import Scene
+
+
+
+
+def make_scenes():
+    s=Scene("/home/nd/repos/Projects/video-o-matic/data","Future is Now.mp3")
+
+
+    # Create a template
+    s.create_template(
+        name="Skill Showcase",
+        #template=" in a robot workshop. The computer is a single Blue piece, with a built in keyboard and a green CRT monitor. The text is centered in a CRT-style font. The text reads '{item}' in bright green against a black screen, contained by the montior. it has a slight curvature and horizontal lines",
+        template="Centered on a computer on a desk, in a robot workshop. A blue computer with a keyboard and green CRT monitor displays '{item}' in green 8bit pixelated text on a black screen, with slight curvature and horizontal scan lines.",
+        duration=1,
+        motion=280
+    )
+    # List of skills
+    skills = [
+        "C", "C++", "C#", "PHP", "Python", "GO", "Embedded", "SQL",
+        "Kubernetes","Open Shift", "VMware", "Xen", "AWS ( EC2 / EKS )", "GCP ( GKE )", 
+        "Ansible Automation Platform", "IBM Cloudpacks"," KAFKA", 
+        "API Development", "SOAP Development", "FPGA's", "Tons of other stuff"
+    ]
+
+    PERSON="an middle aged man with a short grey beard and wild brown grey hair "
+    THEME="Gothic"
+    s.add_scene("Opening"     , 6,motion=10, prompt=f"A dark moonlight sky decending upon an remote woods, the moon is large and blood red")
+    s.add_scene("Home"        , 6,motion=10, prompt=f"A {THEME}-inspired long techno gypsy wagon home nestled deep in the woods, illuminated by candels and surrounded by glowing cables")
+    s.add_scene("Close-Up"    , 3,motion=10, prompt=f"A wide shot of {PERSON} typing on a sleek, futuristic computer. The setting is infused with {THEME}  and a slight haze in the air.")
+    s.add_scene("Beginnings"  , 3,motion=10, prompt=f"A closeup of a paper note with a hand holding a pencil that says  watkins=new beginnings();")
+    s.add_scene("Whiteboard"  , 3,motion=10, prompt=f"A {THEME}-themed classroom where a {PERSON} writes code on a digital whiteboard. The room is bathed in neon lights, with holographic elements floating around, and futuristic gadgets scattered on the desks.")
+    s.add_scene("Dark Shadow" , 3,motion=10, prompt=f"A dark hall with the silouette  of a person")
+    s.add_scene("Hire 1"      , 4,motion=10, prompt=f"On a field of grass a billboard, says Hire Watkins for Architect.  ")
+    s.add_scene("Team Meeting", 3,motion=10, prompt=f"{PERSON} in a team meeting, surrounded by holographic screens and neon-lit walls. The team is engaged in a high-tech discussion, with a futuristic cityscape visible through the large windows.")
+    s.add_scene("Hire 2"      , 4,motion=10, prompt=f"set on the moon, A billboard that says Hire Watkins for Code.")
+    s.add_scene("Late Work"   , 3,motion=10, prompt=f"{PERSON} working late into the night in a {THEME}-themed workspace. The room is dimly lit, with neon lights reflecting off the metal surfaces, and the city’s neon skyline visible through a large window.")
+    s.add_scene("CODE AWAITS" , 3,motion=10, prompt=f"A closeup of a paper note being  placed on a refridgerator that func async code(){{  awaits; }} ")
+    s.add_scene("Celebration" , 6,motion=10, prompt=f"A high-energy celebration after success. The scene features a futuristic setting with holographic confetti, neon lights, and a digital display showing the project’s success")
+    s.add_scene("Hire 3"      , 4,motion=10, prompt=f" n a bus. A Sign that says Hire Watkins for Team Lead.")
+    s.add_scene("Dark Coder"  , 3,motion=10, prompt=f"A dark room with the close up of a silouette of a person coding in a chair being outlined by a computer monitor fuill of code")
+    s.add_scene("Achievement" , 3,motion=10, prompt=f"WATKINS for the win. Written in ink on a wall. people cheering, in a {THEME} environment")
+    s.add_scene("Hire 4"      , 4,motion=10, prompt=f"an old on a Floppy Disk on a desk,  that says Hire Watkins for Legacy code")
+    s.add_scene("Focus"       , 3,motion=10, prompt=f"A focused shot of {PERSON} concentrating intensely on a complex task. The scene is set in a {THEME} workspace, with the glow of monitors and neon lights reflecting off the developer's determined face.")
+    s.add_scene("Digital"     , 3,motion=10, prompt=f"A close up of electricity ignighting a computer on fire blue. ")
+    s.add_scene("Hire 5"      , 4,motion=10, prompt=f"Written with rags on the floor. A Sign that says Hire Watkins for RAG Systems.")
+    s.add_scene("Tools"       , 3,motion=10, prompt=f"A montage of different programming languages, cobol, pascal, python, visual basic, lula on a wall under a bridge")
+    s.add_scene("Project"     , 3,motion=10, prompt=f"{PERSON} presenting a project in a {THEME} boardroom, with holographic displays showing the project details. ")
+    s.add_scene("Hire 6"      , 4,motion=10, prompt=f"in the sand in written in water. Sign that says Hire Watkins for AI Models .")
+    s.add_scene("Fast-Paced"  , 3,motion=10, prompt=f"An intense coding scene where lines of code rapidly appear on multiple screens in a {THEME} environment. The room is dark, with neon lights reflecting off the screens, creating a sense of urgency.")
+    s.add_scene("Meetings"    , 3,motion=10, prompt=f"A room of very happy developers with arms raised with a sign that says WE DID IT.")
+    s.add_scene("OUTERSPACE"  , 6,motion=10, prompt=f"A 1980's IBM Keyboard floating in space.")
+    s.add_scene("Adaptability", 6,motion=10, prompt=f"in a {THEME} room. The {PERSON} is shown using tools to build a robot")
+    ## Skills Montage
+    # Create scenes using the template
+    s.create_scenes_from_template(skills, "Skill Showcase")
+    s.add_scene("Future Vision", 6 ,motion=10, prompt=f"an ocean view with a spacesuited figure floating holding a road sign that says  all you need is Watkins ")
+    s.add_scene("READY TO HIRE", 15,motion=10, prompt=f"The final scene with bold text 'READY TO HIRE' displayed in a futuristic, {THEME} setting. The text appears on a holographic screen, with a backdrop of a apocolyptic cityscape")
+    s.add_scene("Watkins", 15,None)
+    
+
+    s.update_metadata()
+
+    # Save the scenes to a YAML file
+    s.save()
+    return s
+
+Path: videomatic/ffmpeg.py
+File: ffmpeg.py
+-------
+import os
+import subprocess
+from typing import List, Union
+import numpy as np
+import PIL.Image
+import PIL.ImageOps
+import tempfile
+
+
+
+def get_video_length(input_file):
+    """Get the duration of the video in seconds using ffmpeg."""
+    result = subprocess.run(
+        ['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', input_file],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+    print(result)
+    print(input_file)
+    return float(result.stdout.strip())
+
+
+def stretch_video(input_file, output_file, dest_length):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.dirname(output_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    # Get the original length of the video
+    original_length = get_video_length(input_file)
+    
+    # Calculate the ratio of destination length to original length
+    stretch_factor = original_length/dest_length 
+    print(1/stretch_factor,original_length,dest_length)
+    # Use ffmpeg to stretch the video
+    subprocess.run([
+        'ffmpeg', '-y' ,'-i', input_file,
+        '-filter_complex', f"[0:v]setpts={1/stretch_factor}*PTS,fps=24,minterpolate=fps=24",
+#        '-filter:v', f'setpts={1/stretch_factor}*PTS',
+        '-an', output_file
+    ], check=True)
+
+   
+
+def combine_videos(file_list, output_file):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.dirname(output_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    # Create a temporary text file to list all the input files for ffmpeg
+    list_file = 'temp_file_list.txt'
+    with open(list_file, 'w') as f:
+        for filename in file_list:
+            f.write(f"file '{filename}'\n")
+
+    # Use ffmpeg to concatenate the videos and re-encode to ensure keyframes are handled correctly
+    subprocess.run([
+        'ffmpeg', '-y', '-f', 'concat', '-safe', '0', '-i', list_file,
+        '-c:v', 'libx264', '-preset', 'fast', '-crf', '18', '-g', '25', output_file
+    ], check=True)
+
+    # Remove the temporary list file
+    os.remove(list_file)
+       
+def add_audio_to_video(video_file, audio_file, output_file):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.dirname(output_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    # Use ffmpeg to combine the video with the audio
+    subprocess.run([
+        'ffmpeg', '-y', '-i', video_file, '-i', audio_file,
+        '-c:v', 'copy', '-c:a', 'aac', '-strict', 'experimental', '-shortest',
+        output_file
+    ], check=True)
+
+def frames_to_video(frames: Union[List[np.ndarray], List[PIL.Image.Image]], output_file: str, fps: int = 24):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.dirname(output_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    # Create a temporary directory to store the frames
+    with tempfile.TemporaryDirectory() as temp_dir:
+        # Save each frame as an image in the temp directory
+        for i, frame in enumerate(frames):
+            if isinstance(frame, np.ndarray):
+                img = Image.fromarray((frame * 255).astype(np.uint8))
+            elif isinstance(frame, PIL.Image.Image):
+                img = frame
+            else:
+                raise ValueError("Frame must be a numpy array or PIL Image")
+
+            img.save(os.path.join(temp_dir, f"frame_{i:06d}.png"))
+        
+        # Create the video using ffmpeg
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-framerate', str(fps),
+            '-i', os.path.join(temp_dir, 'frame_%06d.png'),
+            '-c:v', 'libx264',
+            '-pix_fmt', 'yuv420p',
+            output_file
+        ], check=True)
+
+    print(f"Video successfully generated: {output_file}")
+
+Path: videomatic/__init__.py
+File: __init__.py
+-------
+
+Path: videomatic/cli.py
+File: cli.py
+-------
+import argparse
+from .scene import Scene
+from .video import make_scenes
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Manage video scenes generation.")
+    subparsers = parser.add_subparsers(dest="command", help="Commands")
+
+    # Build command
+    build_parser = subparsers.add_parser("scene", help="Create the yaml file")
+    build_parser = subparsers.add_parser("create_frames", help="Build all scenes, images")
+    build_parser = subparsers.add_parser("create_videos", help="Build all fideos from frames")
+    build_parser = subparsers.add_parser("reformat_video", help="Rebuild Video to correct time length")
+    build_parser = subparsers.add_parser("build", help="Put it all togeather into a single video")
+
+    # Redo command
+    redo_parser = subparsers.add_parser("redo", help="Redo specific scenes")
+    redo_parser.add_argument("frames", nargs="+", type=int, help="Indexes of the scenes to redo")
+
+    args = parser.parse_args()
+
+    if args.command == "scene":
+        print ("Making Scene")
+        scene=make_scenes()
+    if args.command == "create_frames":
+        scene=make_scenes()
+        scene.create_fragments("frames")
+    if args.command == "create_videos":
+        scene=make_scenes()
+        scene.create_fragments("video")
+    if args.command == "reformat_video":
+        scene=make_scenes()
+        scene.correct_fragments()
+    if args.command == "build":
+        scene=make_scenes()
+        scene.build_video()
+    elif args.command == "redo":
+        scene=make_scenes()
+        scene.create_fragments("frames",redo=True,indexes=args.frames)
+        scene.create_fragments("video",redo=True,indexes=args.frames)
+
+if __name__ == "__main__":
+    main()
+ 
+
+Path: web/app.py
+File: app.py
+-------
+import os
+import sys
+import re
+import json
+import mimetypes
+from flask import Flask, render_template, request, redirect, url_for, flash, send_file, abort, Response,jsonify
+
+# Get the path to the 'web' directory
+web_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Get the path to the project root (parent of 'web')
+project_root = os.path.dirname(web_dir)
+
+# Add the project root to the Python path
+sys.path.append(project_root)
+
+from videomatic.scene import Scene
+from videomatic.video import make_scenes
+from videomatic.flux import flux_image
+from videomatic.svd import generate_video
+from videomatic.queue import connect_to_db, add_to_queue, get_queue_status
+
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Required for flashing messages
+
+# Path to the data directory (sibling of 'web')
+data_dir = os.path.join(project_root, "data")
+
+def get_scene():
+    return Scene(data_dir)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/create_scene', methods=['GET', 'POST'])
+def create_scene():
+    if request.method == 'POST':
+        name = request.form.get('name', '')
+        length = float(request.form.get('length', 0))
+        prompt = request.form.get('prompt', '')
+        
+        scene = get_scene()
+        scene.load()  # Load existing scenes
+        scene.add_scene(name, length, prompt)  # Add new scene
+        scene.update_metadata()  # this is needed for all the pathing
+        scene.save()  # Save all scenes including the new one
+        
+        flash('Scene created successfully!', 'success')
+        return redirect(url_for('view_scenes'))
+    return render_template('create_scene.html')
+
+@app.route('/view_scenes')
+def view_scenes():
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes() or []
+    return render_template('view_scenes.html', scenes=scenes)
+
+@app.route('/scene/<int:scene_id>', methods=['GET', 'POST'])
+def view_scene(scene_id):
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes() or []
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        flash('Invalid scene ID', 'error')
+        return redirect(url_for('view_scenes'))
+    
+    current_scene = scenes[scene_id - 1]
+    
+    if request.method == 'POST':
+        # Update scene details
+        current_scene['name'] = request.form.get('name', '')
+        current_scene['length'] = float(request.form.get('length', 0))
+        current_scene['prompt'] = request.form.get('prompt', '')
+        current_scene['timestamp'] = float(request.form.get('timestamp', 0))
+        
+        # Update video parameters
+        current_scene['video'] = current_scene.get('video', {})
+        current_scene['video']['seed'] = int(request.form.get('video[seed]', 42))
+        current_scene['video']['decode_chunk_size'] = int(request.form.get('video[decode_chunk_size]', 8))
+        current_scene['video']['motion_bucket_id'] = int(request.form.get('video[motion_bucket_id]', 10))
+        current_scene['video']['noise_aug_strength'] = float(request.form.get('video[noise_aug_strength]', 0.1))
+        current_scene['video']['fps'] = int(request.form.get('video[fps]', 8))
+        
+        scene.save()
+        flash('Scene updated successfully!', 'success')
+        return redirect(url_for('view_scene', scene_id=scene_id))
+    
+    # Clear messages on page refresh
+    if 'frame' in current_scene:
+        current_scene['frame'].pop('status_message', None)
+    if 'video' in current_scene:
+        current_scene['video'].pop('status_message', None)
+    
+    # Check if frame and video exist
+    frame_path = current_scene.get('frame', {}).get('output_path', '')
+    video_path = current_scene.get('video', {}).get('output_path', '')
+    
+    frame_exists = os.path.exists(frame_path) if frame_path else False
+    video_exists = os.path.exists(video_path) if video_path else False
+    
+    # Fetch queue status
+    conn = connect_to_db()
+    frame_queue_id = current_scene.get('frame', {}).get('queue_id')
+    video_queue_id = current_scene.get('video', {}).get('queue_id')
+    
+    frame_status = get_queue_status(conn, frame_queue_id) if frame_queue_id else None
+    video_status = get_queue_status(conn, video_queue_id) if video_queue_id else None
+    
+    conn.close()
+    
+    # Prepare status messages
+    frame_status_message = get_status_message(frame_status, 'frame', frame_exists)
+    video_status_message = get_status_message(video_status, 'video', video_exists)
+    
+    # Determine if video generation should be allowed
+    allow_video_generation = frame_exists and not video_exists
+    
+    active_tab = request.args.get('active_tab', 'frame')
+    
+    return render_template('view_scene.html', 
+                           scene=current_scene, 
+                           scene_id=scene_id, 
+                           frame_exists=frame_exists, 
+                           video_exists=video_exists,
+                           frame_status=frame_status, 
+                           video_status=video_status,
+                           frame_status_message=frame_status_message,
+                           video_status_message=video_status_message,
+                           allow_video_generation=allow_video_generation,
+                           active_tab=active_tab)
+
+def get_status_message(status, media_type, exists):
+    if exists:
+        return f""
+    elif not status:
+        return f"No {media_type} generated yet."
+    elif status['status'] == 'pending':
+        return f"{media_type.capitalize()} generation is queued."
+    elif status['status'] == 'in_progress':
+        return f"{media_type.capitalize()} is being generated..."
+    elif status['status'] == 'error':
+        return f"Error generating {media_type}: {status.get('error_message', 'Unknown error')}"
+    #elif status['status'] == 'completed':
+    #    return f"{media_type.capitalize()} generated successfully."
+    else:
+        return f"Unknown status for {media_type}."
+
+@app.route('/scene/<int:scene_id>/delete_frame')
+def delete_frame(scene_id):
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes() or []
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        flash('Invalid scene ID', 'error')
+        return redirect(url_for('view_scenes'))
+    
+    current_scene = scenes[scene_id - 1]
+    frame_path = current_scene.get('frame', {}).get('output_path', '')
+    
+    if frame_path:
+        full_frame_path = os.path.join(data_dir, frame_path)
+        if os.path.exists(full_frame_path):
+            os.remove(full_frame_path)
+            flash('Frame deleted successfully!', 'success')
+        else:
+            flash('Frame not found', 'error')
+    else:
+        flash('Frame path not found in scene data', 'error')
+    
+    # Clear frame status and queue ID
+    if 'frame' in current_scene:
+        current_scene['frame'].pop('status', None)
+        current_scene['frame'].pop('queue_id', None)
+    
+    scene.save()
+    
+    return redirect(url_for('view_scene', scene_id=scene_id))
+@app.route('/scene/<int:scene_id>/delete_video')
+def delete_video(scene_id):
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes() or []
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        flash('Invalid scene ID', 'error')
+        return redirect(url_for('view_scenes'))
+    
+    current_scene = scenes[scene_id - 1]
+    video_path = current_scene.get('video', {}).get('output_path', '')
+    
+    if video_path:
+        if os.path.exists(video_path):
+            os.remove(video_path)
+            flash('Video deleted successfully!', 'success')
+        else:
+            flash('Video file not found', 'error')
+    else:
+        flash('Video path not found in scene data', 'error')
+    
+    # Clear video status and queue ID
+    if 'video' in current_scene:
+        current_scene['video'].pop('status', None)
+        current_scene['video'].pop('queue_id', None)
+    
+    scene.save()
+    
+    return redirect(url_for('view_scene', scene_id=scene_id))
+
+@app.route('/generate_video')
+def generate_video():
+    scene = make_scenes()
+    scene.create_fragments("frames")
+    scene.create_fragments("video")
+    scene.correct_fragments()
+    scene.build_video()
+    flash('Video generation started. This may take a while.', 'info')
+    return redirect(url_for('view_scenes'))
+
+@app.route('/frame/<int:scene_id>')
+def serve_frame(scene_id):
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes() or []
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        abort(404)
+    
+    current_scene = scenes[scene_id - 1]
+    frame_path = current_scene.get('frame', {}).get('output_path', '')
+    
+    if frame_path:
+        if os.path.exists(frame_path):
+            return send_file(frame_path, mimetype='image/png')
+    
+    abort(404)
+
+@app.route('/video/<int:scene_id>')
+def serve_video(scene_id):
+    app.logger.info(f"Attempting to serve video for scene_id: {scene_id}")
+    
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes() or []
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        app.logger.error(f"Invalid scene_id: {scene_id}")
+        abort(404)
+    
+    current_scene = scenes[scene_id - 1]
+    video_path = current_scene.get('video', {}).get('output_path', '')
+    app.logger.info(f"Video path from scene data: {video_path}")
+    
+    if not video_path:
+        app.logger.error("Video path not found in scene data")
+        abort(404)
+    
+    full_video_path = video_path
+    app.logger.info(f"Full video path: {full_video_path}")
+    
+    if not os.path.exists(full_video_path):
+        app.logger.error(f"Video file does not exist at: {full_video_path}")
+        abort(404)
+    
+    file_size = os.path.getsize(full_video_path)
+    app.logger.info(f"Video file exists at: {full_video_path}")
+    app.logger.info(f"File size: {file_size} bytes")
+
+    try:
+        response = send_file(full_video_path, mimetype='video/mp4')
+        response.headers['Content-Length'] = file_size
+        response.headers['Accept-Ranges'] = 'bytes'
+        return response
+    except Exception as e:
+        app.logger.error(f"Error serving video: {str(e)}")
+        abort(500)
+
+@app.route('/video_test/<int:scene_id>')
+def video_test(scene_id):
+    return render_template('video_test.html', scene_id=scene_id)
+
+
+@app.route('/download_video/<int:scene_id>')
+def download_video(scene_id):
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes() or []
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        abort(404)
+    
+    current_scene = scenes[scene_id - 1]
+    video_path = current_scene.get('video', {}).get('output_path', '')
+    
+    if not video_path:
+        abort(404)
+    
+    full_video_path = os.path.join(data_dir, video_path)
+    
+    if not os.path.exists(full_video_path):
+        abort(404)
+    
+    return send_file(full_video_path, as_attachment=True, download_name=f"video_{scene_id}.mp4")
+
+@app.route('/generate_frame/<int:scene_id>', methods=['POST'])
+def generate_frame(scene_id):
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes()
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        flash('Invalid scene ID', 'error')
+        return redirect(url_for('view_scenes'))
+    
+    current_scene = scenes[scene_id - 1]
+    output_file = current_scene.get('frame', {}).get('output_path')
+    
+    conn = connect_to_db()
+    queue_id = add_to_queue(conn, 1, 'image', {
+        'prompt': current_scene['prompt'],
+        'output_file': output_file
+    })
+    conn.close()
+    
+    current_scene['frame']['queue_id'] = queue_id
+    scene.save()
+    
+    flash('Frame generation added to queue.', 'success')
+    return redirect(url_for('view_scene', scene_id=scene_id))
+
+@app.route('/generate_video/<int:scene_id>', methods=['POST'])
+def generate_video_for_scene(scene_id):
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes()
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        flash('Invalid scene ID', 'error')
+        return redirect(url_for('view_scenes'))
+    
+    current_scene = scenes[scene_id - 1]
+    frame_path = current_scene.get('frame', {}).get('output_path')
+    
+    if not frame_path or not os.path.exists(frame_path):
+        flash('Frame must be generated before creating video.', 'error')
+        return redirect(url_for('view_scene', scene_id=scene_id))
+    
+    output_file = current_scene.get('video', {}).get('output_path')
+    
+    conn = connect_to_db()
+    queue_id = add_to_queue(conn, 1, 'video', {
+        'frame_path': frame_path,
+        'output_file': output_file
+    })
+    conn.close()
+    
+    current_scene['video']['queue_id'] = queue_id
+    scene.save()
+    
+    flash('Video generation added to queue.', 'info')
+    return redirect(url_for('view_scene', scene_id=scene_id))
+
+
+@app.route('/check_status/<int:scene_id>/<media_type>')
+def check_status(scene_id, media_type):
+    scene = get_scene()
+    scene.load()
+    scenes = scene.get_scenes()
+    
+    if scene_id < 1 or scene_id > len(scenes):
+        return jsonify({'status': 'error', 'message': 'Invalid scene ID'})
+    
+    current_scene = scenes[scene_id - 1]
+    
+    conn = connect_to_db()
+    if media_type == 'frame':
+        queue_id = current_scene.get('frame', {}).get('queue_id')
+    elif media_type == 'video':
+        queue_id = current_scene.get('video', {}).get('queue_id')
+    else:
+        conn.close()
+        return jsonify({'status': 'error', 'message': 'Invalid media type'})
+    
+    status = get_queue_status(conn, queue_id) if queue_id else None
+    conn.close()
+    
+    if status:
+        message = f"{media_type.capitalize()} is {status['status']}."
+        if status['status'] == 'error':
+            message = f"Error generating {media_type}: {status.get('error_message', 'Unknown error')}"
+        return jsonify({
+            'status': status['status'],
+            'message': message
+        })
+    else:
+        return jsonify({'status': 'not_started', 'message': f'{media_type.capitalize()} generation not started'})
+
+if __name__ == '__main__':
+    print(f"Starting application. Data directory: {data_dir}")
+    app.run(debug=True)
+
+Path: containers/init.sql
+File: init.sql
+-------
+-- Create Users table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create Queue table
+CREATE TABLE queue (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    media_type VARCHAR(10) CHECK (media_type IN ('video', 'image')),
+    generation_parameters JSONB,
+    status VARCHAR(20) CHECK (status IN ('pending', 'in_progress', 'completed', 'error')),
+    priority INTEGER CHECK (priority BETWEEN 1 AND 5),
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    started_at TIMESTAMP,
+    completed_at TIMESTAMP,
+    time_taken INTERVAL,
+    result_file VARCHAR(255),
+    error_message TEXT
+);
+
+-- Create index on status and priority for efficient querying
+CREATE INDEX idx_queue_status_priority ON queue (status, priority);
+
+-- Create Privileges table
+CREATE TABLE privileges (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    privilege VARCHAR(50) NOT NULL,
+    UNIQUE (user_id, privilege)
+);
+
+-- Create users
+INSERT INTO users (username, email) VALUES 
+    ('user.local', 'user@local'),
+    ('admin.local', 'admin@local');
+
+-- Assign privileges
+INSERT INTO privileges (user_id, privilege) VALUES
+    ((SELECT id FROM users WHERE username = 'user.local'), 'submit_job'),
+    ((SELECT id FROM users WHERE username = 'user.local'), 'view_own_jobs'),
+    ((SELECT id FROM users WHERE username = 'admin.local'), 'submit_job'),
+    ((SELECT id FROM users WHERE username = 'admin.local'), 'view_all_jobs'),
+    ((SELECT id FROM users WHERE username = 'admin.local'), 'manage_users'),
+    ((SELECT id FROM users WHERE username = 'admin.local'), 'manage_queue');
+
+-- Sample queue items (commented out)
+/*
+INSERT INTO queue (user_id, media_type, generation_parameters, status, priority)
+VALUES
+    (1, 'video', '{"duration": 60, "resolution": "1080p", "theme": "nature"}', 'pending', 3),
+    (1, 'image', '{"width": 1920, "height": 1080, "style": "abstract"}', 'pending', 2),
+    (1, 'video', '{"duration": 30, "resolution": "720p", "theme": "urban"}', 'pending', 4);
+*/

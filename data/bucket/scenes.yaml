@@ -1,6 +1,7 @@
+audio: /home/nd/repos/Projects/video-o-matic/data/bucket/audio/Future is Now.mp3
 scenes:
 - frame:
-    output_path: data/frames/frame_0001.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0001.png
   id: 1
   length: 6
   name: Opening
@@ -12,11 +13,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0001.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0001.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0001.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0001.mp4
 - frame:
-    output_path: data/frames/frame_0002.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0002.png
   id: 2
   length: 6
   name: Home
@@ -28,11 +29,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0002.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0002.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0002.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0002.mp4
 - frame:
-    output_path: data/frames/frame_0003.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0003.png
   id: 3
   length: 3
   name: Close-Up
@@ -45,11 +46,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0003.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0003.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0003.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0003.mp4
 - frame:
-    output_path: data/frames/frame_0004.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0004.png
   id: 4
   length: 3
   name: Beginnings
@@ -61,11 +62,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0004.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0004.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0004.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0004.mp4
 - frame:
-    output_path: data/frames/frame_0005.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0005.png
   id: 5
   length: 3
   name: Whiteboard
@@ -79,11 +80,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0005.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0005.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0005.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0005.mp4
 - frame:
-    output_path: data/frames/frame_0006.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0006.png
   id: 6
   length: 3
   name: Dark Shadow
@@ -94,11 +95,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0006.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0006.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0006.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0006.mp4
 - frame:
-    output_path: data/frames/frame_0007.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0007.png
   id: 7
   length: 4
   name: Hire 1
@@ -109,11 +110,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0007.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0007.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0007.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0007.mp4
 - frame:
-    output_path: data/frames/frame_0008.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0008.png
   id: 8
   length: 3
   name: Team Meeting
@@ -127,11 +128,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0008.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0008.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0008.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0008.mp4
 - frame:
-    output_path: data/frames/frame_0009.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0009.png
   id: 9
   length: 4
   name: Hire 2
@@ -142,11 +143,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0009.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0009.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0009.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0009.mp4
 - frame:
-    output_path: data/frames/frame_0010.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0010.png
   id: 10
   length: 3
   name: Late Work
@@ -160,11 +161,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0010.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0010.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0010.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0010.mp4
 - frame:
-    output_path: data/frames/frame_0011.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0011.png
   id: 11
   length: 3
   name: CODE AWAITS
@@ -176,11 +177,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0011.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0011.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0011.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0011.mp4
 - frame:
-    output_path: data/frames/frame_0012.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0012.png
   id: 12
   length: 6
   name: Celebration
@@ -193,11 +194,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0012.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0012.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0012.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0012.mp4
 - frame:
-    output_path: data/frames/frame_0013.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0013.png
   id: 13
   length: 4
   name: Hire 3
@@ -208,11 +209,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0013.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0013.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0013.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0013.mp4
 - frame:
-    output_path: data/frames/frame_0014.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0014.png
   id: 14
   length: 3
   name: Dark Coder
@@ -224,11 +225,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0014.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0014.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0014.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0014.mp4
 - frame:
-    output_path: data/frames/frame_0015.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0015.png
   id: 15
   length: 3
   name: Achievement
@@ -240,11 +241,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0015.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0015.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0015.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0015.mp4
 - frame:
-    output_path: data/frames/frame_0016.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0016.png
   id: 16
   length: 4
   name: Hire 4
@@ -255,11 +256,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0016.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0016.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0016.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0016.mp4
 - frame:
-    output_path: data/frames/frame_0017.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0017.png
   id: 17
   length: 3
   name: Focus
@@ -273,11 +274,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0017.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0017.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0017.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0017.mp4
 - frame:
-    output_path: data/frames/frame_0018.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0018.png
   id: 18
   length: 3
   name: Digital
@@ -288,11 +289,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0018.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0018.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0018.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0018.mp4
 - frame:
-    output_path: data/frames/frame_0019.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0019.png
   id: 19
   length: 4
   name: Hire 5
@@ -303,11 +304,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0019.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0019.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0019.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0019.mp4
 - frame:
-    output_path: data/frames/frame_0020.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0020.png
   id: 20
   length: 3
   name: Tools
@@ -319,11 +320,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0020.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0020.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0020.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0020.mp4
 - frame:
-    output_path: data/frames/frame_0021.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0021.png
   id: 21
   length: 3
   name: Project
@@ -336,11 +337,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0021.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0021.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0021.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0021.mp4
 - frame:
-    output_path: data/frames/frame_0022.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0022.png
   id: 22
   length: 4
   name: Hire 6
@@ -352,11 +353,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0022.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0022.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0022.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0022.mp4
 - frame:
-    output_path: data/frames/frame_0023.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0023.png
   id: 23
   length: 3
   name: Fast-Paced
@@ -369,11 +370,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0023.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0023.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0023.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0023.mp4
 - frame:
-    output_path: data/frames/frame_0024.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0024.png
   id: 24
   length: 3
   name: Meetings
@@ -385,11 +386,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0024.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0024.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0024.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0024.mp4
 - frame:
-    output_path: data/frames/frame_0025.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0025.png
   id: 25
   length: 6
   name: OUTERSPACE
@@ -400,11 +401,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0025.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0025.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0025.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0025.mp4
 - frame:
-    output_path: data/frames/frame_0026.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0026.png
   id: 26
   length: 6
   name: Adaptability
@@ -416,11 +417,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0026.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0026.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0026.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0026.mp4
 - frame:
-    output_path: data/frames/frame_0027.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0027.png
   id: 27
   length: 1
   name: Skill Showcase
@@ -431,13 +432,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0027.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0027.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0027.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0027.mp4
 - frame:
-    output_path: data/frames/frame_0028.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0028.png
   id: 28
   length: 1
   name: Skill Showcase
@@ -448,13 +449,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0028.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0028.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0028.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0028.mp4
 - frame:
-    output_path: data/frames/frame_0029.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0029.png
   id: 29
   length: 1
   name: Skill Showcase
@@ -465,13 +466,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0029.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0029.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0029.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0029.mp4
 - frame:
-    output_path: data/frames/frame_0030.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0030.png
   id: 30
   length: 1
   name: Skill Showcase
@@ -482,13 +483,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0030.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0030.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0030.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0030.mp4
 - frame:
-    output_path: data/frames/frame_0031.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0031.png
   id: 31
   length: 1
   name: Skill Showcase
@@ -499,13 +500,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0031.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0031.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0031.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0031.mp4
 - frame:
-    output_path: data/frames/frame_0032.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0032.png
   id: 32
   length: 1
   name: Skill Showcase
@@ -516,13 +517,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0032.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0032.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0032.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0032.mp4
 - frame:
-    output_path: data/frames/frame_0033.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0033.png
   id: 33
   length: 1
   name: Skill Showcase
@@ -533,13 +534,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0033.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0033.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0033.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0033.mp4
 - frame:
-    output_path: data/frames/frame_0034.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0034.png
   id: 34
   length: 1
   name: Skill Showcase
@@ -550,13 +551,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0034.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0034.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0034.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0034.mp4
 - frame:
-    output_path: data/frames/frame_0035.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0035.png
   id: 35
   length: 1
   name: Skill Showcase
@@ -567,13 +568,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0035.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0035.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0035.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0035.mp4
 - frame:
-    output_path: data/frames/frame_0036.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0036.png
   id: 36
   length: 1
   name: Skill Showcase
@@ -584,13 +585,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0036.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0036.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0036.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0036.mp4
 - frame:
-    output_path: data/frames/frame_0037.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0037.png
   id: 37
   length: 1
   name: Skill Showcase
@@ -601,13 +602,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0037.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0037.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0037.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0037.mp4
 - frame:
-    output_path: data/frames/frame_0038.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0038.png
   id: 38
   length: 1
   name: Skill Showcase
@@ -618,13 +619,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0038.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0038.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0038.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0038.mp4
 - frame:
-    output_path: data/frames/frame_0039.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0039.png
   id: 39
   length: 1
   name: Skill Showcase
@@ -635,13 +636,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0039.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0039.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0039.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0039.mp4
 - frame:
-    output_path: data/frames/frame_0040.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0040.png
   id: 40
   length: 1
   name: Skill Showcase
@@ -652,13 +653,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0040.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0040.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0040.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0040.mp4
 - frame:
-    output_path: data/frames/frame_0041.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0041.png
   id: 41
   length: 1
   name: Skill Showcase
@@ -670,13 +671,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0041.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0041.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0041.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0041.mp4
 - frame:
-    output_path: data/frames/frame_0042.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0042.png
   id: 42
   length: 1
   name: Skill Showcase
@@ -687,13 +688,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0042.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0042.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0042.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0042.mp4
 - frame:
-    output_path: data/frames/frame_0043.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0043.png
   id: 43
   length: 1
   name: Skill Showcase
@@ -704,13 +705,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0043.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0043.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0043.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0043.mp4
 - frame:
-    output_path: data/frames/frame_0044.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0044.png
   id: 44
   length: 1
   name: Skill Showcase
@@ -721,13 +722,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0044.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0044.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0044.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0044.mp4
 - frame:
-    output_path: data/frames/frame_0045.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0045.png
   id: 45
   length: 1
   name: Skill Showcase
@@ -738,13 +739,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0045.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0045.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0045.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0045.mp4
 - frame:
-    output_path: data/frames/frame_0046.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0046.png
   id: 46
   length: 1
   name: Skill Showcase
@@ -755,13 +756,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0046.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0046.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0046.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0046.mp4
 - frame:
-    output_path: data/frames/frame_0047.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0047.png
   id: 47
   length: 1
   name: Skill Showcase
@@ -772,13 +773,13 @@ scenes:
   video:
     decode_chunk_size: 8
     fps: 8
-    motion_bucket_id: 10
+    motion_bucket_id: 280
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0047.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0047.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0047.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0047.mp4
 - frame:
-    output_path: data/frames/frame_0048.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0048.png
   id: 48
   length: 6
   name: Future Vision
@@ -790,11 +791,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0048.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0048.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0048.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0048.mp4
 - frame:
-    output_path: data/frames/frame_0049.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0049.png
   id: 49
   length: 15
   name: READY TO HIRE
@@ -807,11 +808,11 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0049.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0049.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0049.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0049.mp4
 - frame:
-    output_path: data/frames/frame_0050.png
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/frames/frame_0050.png
   id: 50
   length: 15
   name: Watkins
@@ -822,7 +823,10 @@ scenes:
     fps: 8
     motion_bucket_id: 10
     noise_aug_strength: 0.1
-    output_path: data/videos/video_0050.mp4
+    output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/video_0050.mp4
     seed: 42
-    temp_output_path: data/videos/temp/video_0050.mp4
+    temp_output_path: /home/nd/repos/Projects/video-o-matic/data/bucket/videos/temp/video_0050.mp4
 total_length: 156
+video:
+  combined: /home/nd/repos/Projects/video-o-matic/data/bucket/videomatic.mp4
+  final: /home/nd/repos/Projects/video-o-matic/data/bucket/videomatic-a.mp4

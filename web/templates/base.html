@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Video-o-matic{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components/css/carbon-components.min.css">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header with fixed positioning -->
+    <header class="bx--header" role="banner" aria-label="Video-o-matic">
+        <div class="bx--header__name">
+            <a href="{{ url_for('index') }}" class="bx--header__name">
+                Video-o-matic
+            </a>
+        </div>
+        <nav class="bx--header__nav" role="navigation" aria-label="Main Navigation">
+            <ul class="bx--header__menu-bar">
+                <li class="bx--header__menu-item">
+                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li class="bx--header__menu-item">
+                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('create_scene') }}">Create Scene</a>
+                </li>
+                <li class="bx--header__menu-item">
+                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('view_scenes') }}">View Scenes</a>
+                </li>
+             </ul>
+        </nav>
+    </header>
+
+    <!-- Content area that automatically starts below the header -->
+    <div class="bx--content">
+        <main class="bx--grid bx--grid--full-width">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://unpkg.com/carbon-components/scripts/carbon-components.min.js"></script>
+</body>
+</html>

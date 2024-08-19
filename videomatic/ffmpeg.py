@@ -1,5 +1,12 @@
 import os
 import subprocess
+from typing import List, Union
+import numpy as np
+import PIL.Image
+import PIL.ImageOps
+import tempfile
+
+
 
 def get_video_length(input_file):
     """Get the duration of the video in seconds using ffmpeg."""
@@ -69,3 +76,34 @@ def add_audio_to_video(video_file, audio_file, output_file):
         '-c:v', 'copy', '-c:a', 'aac', '-strict', 'experimental', '-shortest',
         output_file
     ], check=True)
+
+def frames_to_video(frames: Union[List[np.ndarray], List[PIL.Image.Image]], output_file: str, fps: int = 24):
+    # Create the output directory if it doesn't exist
+    output_dir = os.path.dirname(output_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    # Create a temporary directory to store the frames
+    with tempfile.TemporaryDirectory() as temp_dir:
+        # Save each frame as an image in the temp directory
+        for i, frame in enumerate(frames):
+            if isinstance(frame, np.ndarray):
+                img = Image.fromarray((frame * 255).astype(np.uint8))
+            elif isinstance(frame, PIL.Image.Image):
+                img = frame
+            else:
+                raise ValueError("Frame must be a numpy array or PIL Image")
+
+            img.save(os.path.join(temp_dir, f"frame_{i:06d}.png"))
+        
+        # Create the video using ffmpeg
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-framerate', str(fps),
+            '-i', os.path.join(temp_dir, 'frame_%06d.png'),
+            '-c:v', 'libx264',
+            '-pix_fmt', 'yuv420p',
+            output_file
+        ], check=True)
+
+    print(f"Video successfully generated: {output_file}")

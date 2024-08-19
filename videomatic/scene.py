@@ -7,11 +7,11 @@ import subprocess
 
 class Scene:
     def __init__(self, base_dir,audio=None):
-        self.base_dir =base_dir
-        self.scene_dir =base_dir
-        self.frame_dir=os.path.join(base_dir,"frames")
-        self.video_dir=os.path.join(base_dir,"videos")
-        self.audio_dir=os.path.join(base_dir,"audio")
+        self.base_dir =os.path.join(base_dir,'bucket')
+        self.scene_dir =self.base_dir 
+        self.frame_dir=os.path.join(self.base_dir ,"frames")
+        self.video_dir=os.path.join(self.base_dir ,"videos")
+        self.audio_dir=os.path.join(self.base_dir ,"audio")
         if audio:
             self.audio=os.path.join(self.audio_dir,audio)
         else: 
@@ -30,7 +30,7 @@ class Scene:
         os.makedirs(self.video_dir, exist_ok=True)
         os.makedirs(self.audio_dir, exist_ok=True)        
 
-    def add_scene(self, name, length, prompt, timestamp=None):
+    def add_scene(self, name, length, prompt, timestamp=None,motion=10):
         if timestamp is None:
             timestamp = self.total_length
         
@@ -38,7 +38,8 @@ class Scene:
             "name": name,
             "length": length,
             "prompt": prompt,
-            "timestamp": timestamp
+            "timestamp": timestamp,
+            'video': { 'motion_bucket_id': motion}
         }
         self.scenes.append(scene)
         self.scenes.sort(key=lambda x: x["timestamp"])  # Sort scenes by timestamp
@@ -61,7 +62,7 @@ class Scene:
             yaml.dump({
                 "scenes": self.scenes,
                 "total_length": self.total_length,
-                "audio"::self.audio,
+                "audio":self.audio,
                 "video":self.video
             }, file)
 
@@ -75,11 +76,12 @@ class Scene:
             self.video= data.get("video", [])
 
 
-    def create_template(self, name, template, duration=6):
+    def create_template(self, name, template, duration=6,motion=10):
         tpl = {
             'name': name,
             'template': template,
-            'duration': duration
+            'duration': duration,
+            'motion': motion
         }
         self.templates.append(tpl)
 
@@ -102,7 +104,7 @@ class Scene:
         
         for item in data:
             prompt_tpl = template['template'].format(item=item)
-            self.add_scene(template_name, duration, prompt_tpl, timestamp)
+            self.add_scene(template_name, duration, prompt_tpl, timestamp,motion=template['motion'])
             timestamp += duration
 
 
@@ -165,12 +167,12 @@ class Scene:
             temp_video_path = os.path.join(self.video_dir,'temp', f"video_{scene['id']:04d}.mp4")
             scene['frame']={}
             scene['frame']['output_path']=image_path
-            scene['video']={}
+            #scene['video']={}
             scene['video']['output_path']=video_path
             scene['video']['temp_output_path']=temp_video_path
             scene['video']['seed']=42
             scene['video']['decode_chunk_size']=8
-            scene['video']['motion_bucket_id']=10
+            #scene['video']['motion_bucket_id']=10
             scene['video']['noise_aug_strength']=0.1
             scene['video']['fps']=8
                         

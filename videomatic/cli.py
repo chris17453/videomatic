@@ -8,6 +8,7 @@ def main():
     subparsers = parser.add_subparsers(dest="command", help="Commands")
 
     # Build command
+    build_parser = subparsers.add_parser("scene", help="Create the yaml file")
     build_parser = subparsers.add_parser("create_frames", help="Build all scenes, images")
     build_parser = subparsers.add_parser("create_videos", help="Build all fideos from frames")
     build_parser = subparsers.add_parser("reformat_video", help="Rebuild Video to correct time length")
@@ -19,6 +20,9 @@ def main():
 
     args = parser.parse_args()
 
+    if args.command == "scene":
+        print ("Making Scene")
+        scene=make_scenes()
     if args.command == "create_frames":
         scene=make_scenes()
         scene.create_fragments("frames")
