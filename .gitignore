@@ -1,9 +1,9 @@
 *.webm
 temp
 __pycache__
-data/audio
-data/videos
-data/frames
+data/bucket/audio
+data/bucket/videos
+data/bucket/frames
 .env
 .flort
 .png
