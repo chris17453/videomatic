@@ -28,13 +28,11 @@ app.secret_key = 'your_secret_key'  # Required for flashing messages
 # Path to the data directory (sibling of 'web')
 data_dir = os.path.join(project_root, "data")
 
-def get_scene():
-    return Scene(data_dir)
 
 @app.route('/')
 def index():
     # Step 1: Retrieve scenes
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes() or []
     num_scenes = len(scenes)
@@ -46,9 +44,9 @@ def index():
     if video_exists:
         # Step 3: Get video length if it exists
         video_length = get_video_length(video_path)  # Assuming you have this function
-        video_status = f"Video is built. Length: {video_length} seconds."
+        video_status = f"Length: {video_length} seconds."
     else:
-        video_status = "Video not built. Click to build."
+        video_status = "Video not built"
     print(scene)
     is_synced=scene.is_synced()
     
@@ -63,7 +61,7 @@ def create_scene():
         length = float(request.form.get('length', 0))
         prompt = request.form.get('prompt', '')
         
-        scene = get_scene()
+        scene = Scene(data_dir)
         scene.load()  # Load existing scenes
         scene.add_scene(name, length, prompt)  # Add new scene
         scene.update_metadata()  # this is needed for all the pathing
@@ -75,14 +73,14 @@ def create_scene():
 
 @app.route('/view_scenes')
 def view_scenes():
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes() or []
     return render_template('view_scenes.html', scenes=scenes)
 
 @app.route('/scene/<int:scene_id>', methods=['GET', 'POST'])
 def view_scene(scene_id):
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes() or []
     
@@ -173,7 +171,7 @@ def get_status_message(status, media_type, exists):
 
 @app.route('/scene/<int:scene_id>/delete_frame', methods=['POST'])
 def delete_frame(scene_id):
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes() or []
     
@@ -205,7 +203,7 @@ def delete_frame(scene_id):
 
 @app.route('/scene/<int:scene_id>/delete_video', methods=['POST'])
 def delete_video(scene_id):
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes() or []
     
@@ -236,17 +234,21 @@ def delete_video(scene_id):
 
 @app.route('/generate_video')
 def generate_video():
-    scene = make_scenes()
-    scene.create_fragments("frames")
-    scene.create_fragments("video")
-    scene.correct_fragments()
-    scene.build_video()
+    project=Scene(data_dir)
+    project.load()
+    # this is to generate stuff thats not generated
+    project.create_fragments("frames")
+    project.create_fragments("video")
+    # this is to fix the video lenghts... might change
+    project.correct_fragments()
+    # This makes the video
+    project.build_video()
     flash('Video generation started. This may take a while.', 'info')
     return redirect(url_for('view_scenes'))
 
 @app.route('/frame/<int:scene_id>')
 def serve_frame(scene_id):
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes() or []
     
@@ -266,7 +268,7 @@ def serve_frame(scene_id):
 def serve_video(scene_id):
     app.logger.info(f"Attempting to serve video for scene_id: {scene_id}")
     
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes() or []
     
@@ -307,7 +309,7 @@ def serve_video(scene_id):
 def serve_final_video():
     app.logger.info(f"Attempting to serve final video")
     
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     
     video_path = scene.video.get('final', '')
@@ -344,7 +346,7 @@ def video_test(scene_id):
 
 @app.route('/download_video/<int:scene_id>')
 def download_video(scene_id):
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes() or []
     
@@ -366,7 +368,7 @@ def download_video(scene_id):
 
 @app.route('/generate_frame/<int:scene_id>', methods=['POST'])
 def generate_frame(scene_id):
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes()
     
@@ -393,7 +395,7 @@ def generate_frame(scene_id):
 
 @app.route('/generate_video/<int:scene_id>', methods=['POST'])
 def generate_video_for_scene(scene_id):
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes()
     
@@ -427,7 +429,7 @@ def generate_video_for_scene(scene_id):
 
 @app.route('/check_status/<int:scene_id>/<media_type>')
 def check_status(scene_id, media_type):
-    scene = get_scene()
+    scene = Scene(data_dir)
     scene.load()
     scenes = scene.get_scenes()
     

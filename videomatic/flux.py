@@ -7,7 +7,7 @@ pipe = None
 
 
 
-def flux_image(prompt,output_file):
+def flux_image(prompt,output_file,guidance=3.5, steps=10,sequence_length=256):
     global pipe
     if pipe==None:
         pipe = FluxPipeline.from_pretrained(model_path, torch_dtype=torch.bfloat16)
@@ -21,10 +21,10 @@ def flux_image(prompt,output_file):
         prompt,
         height=576,
         width=1024,
-        guidance_scale=2.5,
+        guidance_scale=guidance,
         output_type="pil",
-        num_inference_steps=10,
-        max_sequence_length=256,
+        num_inference_steps=steps,
+        max_sequence_length=sequence_length,
         generator=torch.Generator("cpu").manual_seed(0)
     ).images[0]
     image.save(output_file)

@@ -13,7 +13,7 @@ class Scene:
         self.video_dir = os.path.join(self.base_dir ,"videos")
         self.audio_dir = os.path.join(self.base_dir ,"audio")
         self.thumbnail = os.path.join(self.base_dir, f"thumbnail.png")
-        
+        self.name="Project"
         if audio:
             self.audio=os.path.join(self.audio_dir,audio)
         else: 
@@ -190,6 +190,9 @@ class Scene:
             temp_video_path = os.path.join(self.video_dir,'temp', f"video_{scene['id']:04d}.mp4")
             
             scene.setdefault('frame', {}).setdefault('output_path', image_path)
+            scene.setdefault('frame', {}).setdefault('guidance', 3.5)
+            scene.setdefault('frame', {}).setdefault('steps', 10)
+            scene.setdefault('frame', {}).setdefault('sequence_length', 256)
             
             scene.setdefault('video', {}).setdefault('output_path', video_path)
             scene['video'].setdefault('temp_output_path', temp_video_path)

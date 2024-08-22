@@ -5,3 +5,5 @@ delete video button removed when clicked
 frame status update on delete clicked
 video  status update on delete clicked
 delete scene
+Change scene class to a project class... less confusing
+add flux configs fo edit scene
