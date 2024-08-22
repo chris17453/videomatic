@@ -7,11 +7,13 @@ import subprocess
 
 class Scene:
     def __init__(self, base_dir,audio=None):
-        self.base_dir =os.path.join(base_dir,'bucket')
-        self.scene_dir =self.base_dir 
-        self.frame_dir=os.path.join(self.base_dir ,"frames")
-        self.video_dir=os.path.join(self.base_dir ,"videos")
-        self.audio_dir=os.path.join(self.base_dir ,"audio")
+        self.base_dir  = os.path.join(base_dir,'bucket')
+        self.scene_dir = self.base_dir 
+        self.frame_dir = os.path.join(self.base_dir ,"frames")
+        self.video_dir = os.path.join(self.base_dir ,"videos")
+        self.audio_dir = os.path.join(self.base_dir ,"audio")
+        self.thumbnail = os.path.join(self.base_dir, f"thumbnail.png")
+        
         if audio:
             self.audio=os.path.join(self.audio_dir,audio)
         else: 
@@ -20,6 +22,7 @@ class Scene:
         self.total_length = 0
         self.templates=[]
         self.video={}
+        self.updated=None
   
         # Create directories if they don't exist
         self.create_directories()
@@ -91,6 +94,19 @@ class Scene:
                 return template
         return None
 
+    def is_synced(self):
+        sync=False
+        for scene in self.scenes:
+            if scene.get('updated',None):
+                sync=False
+            if scene['video'].get('updated',None):
+                sync=False
+            if scene['frame'].get('updated',None):
+                sync=False
+
+        return sync
+
+
     def create_scenes_from_template(self, data, template_name, start_time=0):
         template = self.get_template_by_name(template_name)
         if not template:
@@ -119,7 +135,11 @@ class Scene:
         files=[]
         for scene in self.scenes:
             files.append(scene['video']['temp_output_path'])
-    
+            scene['updated']=False
+        
+        # we updated the status of each scene 
+        self.save()
+
         combine_videos(files,self.video['combined'])
         if self.audio:
             add_audio_to_video(self.video['combined'],self.audio,self.video['final'])
@@ -142,7 +162,9 @@ class Scene:
             try:
                 if output_type == "frames":
                     flux_image(prompt=scene['prompt'], output_file=scene['frame']['output_path'])
+                    scene['frame']['updated']=True
                 elif output_type == "video":
+                    scene['video']['updated']=True
                     generate_video( image_path        = scene['frame']['output_path'], 
                                     output_file       = scene['video']['output_path'], 
                                     seed              = scene['video']['seed'], 
@@ -158,24 +180,27 @@ class Scene:
     def update_metadata(self):
         output_file =  os.path.join(self.base_dir, f"videomatic.mp4")
         output_file2 =  os.path.join(self.base_dir, f"videomatic-a.mp4")
+        thumbnail =  os.path.join(self.base_dir, f"thumbnail.png")
         self.video['combined'] = output_file
         self.video['final'] = output_file2
-
+        self.thumbnail = thumbnail
         for scene in self.scenes:
             image_path = os.path.join(self.frame_dir, f"frame_{scene['id']:04d}.png")
             video_path = os.path.join(self.video_dir, f"video_{scene['id']:04d}.mp4")
             temp_video_path = os.path.join(self.video_dir,'temp', f"video_{scene['id']:04d}.mp4")
-            scene['frame']={}
-            scene['frame']['output_path']=image_path
-            #scene['video']={}
-            scene['video']['output_path']=video_path
-            scene['video']['temp_output_path']=temp_video_path
-            scene['video']['seed']=42
-            scene['video']['decode_chunk_size']=8
-            #scene['video']['motion_bucket_id']=10
-            scene['video']['noise_aug_strength']=0.1
-            scene['video']['fps']=8
-                        
+            
+            scene.setdefault('frame', {}).setdefault('output_path', image_path)
+            
+            scene.setdefault('video', {}).setdefault('output_path', video_path)
+            scene['video'].setdefault('temp_output_path', temp_video_path)
+            scene['video'].setdefault('seed', 42)
+            scene['video'].setdefault('decode_chunk_size', 8)
+            scene['video'].setdefault('noise_aug_strength', 0.1)
+            scene['video'].setdefault('fps', 8)
+            scene['video'].setdefault('updated', True)
+            scene['frame'].setdefault('updated', True)
+
+
 
 
                 

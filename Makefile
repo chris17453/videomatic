@@ -26,6 +26,9 @@ reformat:
 web:
 	@python web/app.py
 
+queue:
+	@python -m videomatic.queue
+
 flort:
 	@flort --py --sql videomatic web containers
 

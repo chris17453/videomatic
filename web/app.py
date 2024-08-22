@@ -49,9 +49,11 @@ def index():
         video_status = f"Video is built. Length: {video_length} seconds."
     else:
         video_status = "Video not built. Click to build."
+    print(scene)
+    is_synced=scene.is_synced()
     
     # Step 4: Render this information in your homepage template
-    return render_template('homepage.html', num_scenes=num_scenes, video_status=video_status, video_exists=video_exists)
+    return render_template('homepage.html', num_scenes=num_scenes, video_status=video_status, video_exists=video_exists,is_synced=is_synced)
 
 
 @app.route('/create_scene', methods=['GET', 'POST'])
@@ -169,7 +171,7 @@ def get_status_message(status, media_type, exists):
     else:
         return f"Unknown status for {media_type}."
 
-@app.route('/scene/<int:scene_id>/delete_frame')
+@app.route('/scene/<int:scene_id>/delete_frame', methods=['POST'])
 def delete_frame(scene_id):
     scene = get_scene()
     scene.load()
@@ -200,7 +202,8 @@ def delete_frame(scene_id):
     scene.save()
     
     return redirect(url_for('view_scene', scene_id=scene_id))
-@app.route('/scene/<int:scene_id>/delete_video')
+
+@app.route('/scene/<int:scene_id>/delete_video', methods=['POST'])
 def delete_video(scene_id):
     scene = get_scene()
     scene.load()
@@ -299,6 +302,41 @@ def serve_video(scene_id):
         app.logger.error(f"Error serving video: {str(e)}")
         abort(500)
 
+
+@app.route('/video_final')
+def serve_final_video():
+    app.logger.info(f"Attempting to serve final video")
+    
+    scene = get_scene()
+    scene.load()
+    
+    video_path = scene.video.get('final', '')
+    app.logger.info(f"Video path from final: {video_path}")
+    
+    if not video_path:
+        app.logger.error("Video path not found for final")
+        abort(404)
+    
+    full_video_path = video_path
+    app.logger.info(f"Full video path: {full_video_path}")
+    
+    if not os.path.exists(full_video_path):
+        app.logger.error(f"Video file does not exist at: {full_video_path}")
+        abort(404)
+    
+    file_size = os.path.getsize(full_video_path)
+    app.logger.info(f"Video file exists at: {full_video_path}")
+    app.logger.info(f"File size: {file_size} bytes")
+
+    try:
+        response = send_file(full_video_path, mimetype='video/mp4')
+        response.headers['Content-Length'] = file_size
+        response.headers['Accept-Ranges'] = 'bytes'
+        return response
+    except Exception as e:
+        app.logger.error(f"Error serving video: {str(e)}")
+        abort(500)        
+
 @app.route('/video_test/<int:scene_id>')
 def video_test(scene_id):
     return render_template('video_test.html', scene_id=scene_id)
@@ -347,8 +385,9 @@ def generate_frame(scene_id):
     conn.close()
     
     current_scene['frame']['queue_id'] = queue_id
+    current_scene['updated']=True
     scene.save()
-    
+    print("WHAT")
     flash('Frame generation added to queue.', 'success')
     return redirect(url_for('view_scene', scene_id=scene_id))
 
@@ -368,7 +407,8 @@ def generate_video_for_scene(scene_id):
     if not frame_path or not os.path.exists(frame_path):
         flash('Frame must be generated before creating video.', 'error')
         return redirect(url_for('view_scene', scene_id=scene_id))
-    
+
+    current_scene['updated']=True
     output_file = current_scene.get('video', {}).get('output_path')
     
     conn = connect_to_db()
@@ -418,6 +458,43 @@ def check_status(scene_id, media_type):
         })
     else:
         return jsonify({'status': 'not_started', 'message': f'{media_type.capitalize()} generation not started'})
+
+
+def root_dir():  # pragma: no cover
+    return os.path.abspath(os.path.dirname(__file__))
+
+
+def get_file(filename):  # pragma: no cover
+    try:
+        src = os.path.join(root_dir(), filename)
+        # Figure out how flask returns static files
+        # Tried:
+        # - render_template
+        # - send_file
+        # This should not be so non-obvious
+        return open(src).read()
+    except IOError as exc:
+        return str(exc)
+
+
+@app.route('/<path:path>')
+def get_resource(path):  # pragma: no cover
+    mimetypes = {
+        ".png": "image/png",
+        ".css": "text/css",
+        ".html": "text/html",
+        ".js": "application/javascript",
+    }
+    complete_path = os.path.join(root_dir(), path)
+    print(path)
+    
+    ext = os.path.splitext(path)[1]
+    mimetype = mimetypes.get(ext, "text/html")
+    print(complete_path,mimetype,ext)
+    content = get_file(complete_path)
+    return Response(content, mimetype=mimetype)
+
+
 
 if __name__ == '__main__':
     print(f"Starting application. Data directory: {data_dir}")

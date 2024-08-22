@@ -4,6 +4,7 @@ __pycache__
 data/bucket/audio
 data/bucket/videos
 data/bucket/frames
+data
 .env
 .flort
 .png

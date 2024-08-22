@@ -3,64 +3,65 @@
 {% block content %}
 <div class="bx--grid bx--grid--full-width bx--grid--no-gutter bx--grid--condensed">
     <div class="bx--row bx--row--condensed bx--row--padding">
-        <div class="bx--col-lg-8 bx--col-md-6 bx--col-sm-12 bx--offset-lg-4 bx--offset-md-3 bx--offset-sm-0">
-            <div class="bx--content-block">
-                <h1 class="bx--type-expressive-heading-03">Welcome to Videomatic</h1>
-                <p class="bx--type-expressive-paragraph-01">Create stunning AI-generated videos with ease.</p>
-                <hr class="bx--hr">
-
-                <h2 class="bx--type-expressive-heading-04">Project Actions</h2>
-                <p class="bx--type-body-long-01">Get started by creating a new scene, viewing existing ones, or building the final video.</p>
+      <!-- Project Overview Column -->
+      <div class="bx--col-lg-6 bx--col-md-6 bx--col-sm-12">
+        <div class="bx--content-block">
+            <h2 class="bx--type-expressive-heading-04">Project Overview</h2>
+            <section class="bx--structured-list">
+                <div class="bx--structured-list-tbody">
+                    <div class="bx--structured-list-row bx--structured-list-row--header-row">
+                        <div class="bx--structured-list-td">
+                            Number of Scenes
+                        </div>
+                        <div class="bx--structured-list-td">
+                            {{ num_scenes }}
+                        </div>
+                    </div>
+                    <div class="bx--structured-list-row">
+                        <div class="bx--structured-list-td">
+                            Status
+                        </div>
+                        <div class="bx--structured-list-td">
+                            {{ video_status }}
+                        </div>
+                    </div>
+                    <div class="bx--structured-list-row">
+                        <div class="bx--structured-list-td">
+                            Is Synced
+                        </div>
+                        <div class="bx--structured-list-td">
+                            {{ is_synced }}
+                        </div>
+                    </div>
+                </div>
                 <div class="bx--btn-set">
                     <a href="{{ url_for('create_scene') }}" class="bx--btn bx--btn--primary bx--btn--lg">Create Scene</a>
                     <a href="{{ url_for('view_scenes') }}" class="bx--btn bx--btn--secondary bx--btn--lg">View Scenes</a>
-
-                    {% if not video_exists %}
+    
+                    {% if not video_exists or not is_synced %}
                         <form method="post" action="/build_video" class="bx--form-inline">
                             <button class="bx--btn bx--btn--primary bx--btn--lg" type="submit">Build Video</button>
                         </form>
-                    {% else %}
-                        <a href="/path/to/final/video.mp4" class="bx--btn bx--btn--tertiary bx--btn--lg" target="_blank">View Video</a>
                     {% endif %}
                 </div>
-
-                <hr class="bx--hr">
-
-                {% if video_exists %}
-                <div class="bx--aspect-ratio bx--aspect-ratio--16x9">
-                    <video controls class="bx--video">
-                        <source src="/path/to/final/video.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="bx--content-block">
-                    <img src="/path/to/thumbnail.jpg" alt="Video Thumbnail" class="bx--image">
-                </div>
-                {% endif %}
-
-                <h2 class="bx--type-expressive-heading-04">Project Overview</h2>
-                <section class="bx--structured-list">
-                    <div class="bx--structured-list-tbody">
-                        <div class="bx--structured-list-row bx--structured-list-row--header-row">
-                            <div class="bx--structured-list-td">
-                                Number of Scenes
-                            </div>
-                            <div class="bx--structured-list-td">
-                                {{ num_scenes }}
-                            </div>
-                        </div>
-                        <div class="bx--structured-list-row">
-                            <div class="bx--structured-list-td">
-                                Status
-                            </div>
-                            <div class="bx--structured-list-td">
-                                {{ video_status }}
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+    
+            </section>
         </div>
+    </div>
+    <hl>
+
+    {% if video_exists %}
+    <div class="bx--aspect-ratio bx--aspect-ratio--16x9">
+        <video controls class="bx--video">
+            <source src="/video_final" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="bx--content-block">
+        <img src="/path/to/thumbnail.jpg" alt="Video Thumbnail" class="bx--image">
+    </div>
+    {% endif %}
+            
     </div>
 </div>
 {% endblock %}

@@ -1,145 +1,128 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bx--grid bx--grid--full-width bx--grid--condensed page-content">
-    <div class="bx--row bx--row--condensed">
-        <div class="bx--col-lg-12 bx--col-md-12 bx--col-sm-12">
-            <h1 class="bx--type-expressive-heading-04">Scene Detail</h1>
-            <!-- Combined Form -->
-            <form method="POST">
-                <!-- Combined Row: Name, Timestamp, Length -->
-                <div class="bx--row bx--row--condensed">
-                    <div class="bx--col-lg-6 bx--col-md-4 bx--col-sm-4">
-                        <div class="bx--form-item">
-                            <label for="name" class="bx--label">Name</label>
-                            <div class="bx--text-input__field-wrapper">
-                                <input type="text" class="bx--text-input" id="name" name="name" value="{{ scene.name }}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
-                        <div class="bx--form-item">
-                            <label for="timestamp" class="bx--label">Timestamp</label>
-                            <div class="bx--text-input__field-wrapper">
-                                <input type="number" step="0.1" class="bx--text-input" id="timestamp" name="timestamp" value="{{ scene.timestamp }}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
-                        <div class="bx--form-item">
-                            <label for="length" class="bx--label">Length (seconds)</label>
-                            <div class="bx--text-input__field-wrapper">
-                                <input type="number" step="0.1" class="bx--text-input" id="length" name="length" value="{{ scene.length }}">
-                            </div>
-                        </div>
-                    </div>
+<div class="bx--row bx--row--condensed">
+    <!-- Left Column: Scene Detail -->
+    <div class="bx--col-lg-7 bx--col-md-7 bx--col-sm-12">
+        <h1 class="bx--type-expressive-heading-04">Scene Detail</h1>
+        <form method="POST">
+            <div class="bx--form-item">
+                <label for="name" class="bx--label">Name</label>
+                <div class="bx--text-input__field-wrapper">
+                    <input type="text" class="bx--text-input" id="name" name="name" value="{{ scene.name }}">
                 </div>
-                
-                <div class="bx--row bx--row--condensed">
-                    <!-- Prompt -->
-                    <div class="bx--form-item">
-                        <label for="prompt" class="bx--label">Prompt</label>
-                        <textarea class="bx--text-area" id="prompt" name="prompt" rows="3">{{ scene.prompt }}</textarea>
-                    </div>
+            </div>
+
+            <div class="bx--form-item">
+                <label for="prompt" class="bx--label">Prompt</label>
+                <textarea class="bx--text-area" id="prompt" name="prompt" rows="3">{{ scene.prompt }}</textarea>
+            </div>
+
+            <div class="bx--form-item">
+                <label for="timestamp" class="bx--label">Timestamp</label>
+                <div class="bx--text-input__field-wrapper">
+                    <input type="number" step="0.1" class="bx--text-input" id="timestamp" name="timestamp"
+                        value="{{ scene.timestamp }}">
                 </div>
-                <!-- Video Parameters -->
-                <div class="bx--row bx--row--condensed">
-                    <!-- Left Column: Video Parameters -->
-                    <div class="bx--col-lg-2 bx--col-md-2 bx--col-sm-12">
-                        <h3 class="bx--type-expressive-heading-03">Video Parameters</h3>
-                        <div class="bx--form-item">
-                            <label for="video[seed]" class="bx--label">Seed</label>
-                            <input type="number" class="bx--text-input" id="video[seed]" name="video[seed]" value="{{ scene.video.seed }}">
-                        </div>
-                        <div class="bx--form-item">
-                            <label for="video[decode_chunk_size]" class="bx--label">Decode Chunk Size</label>
-                            <input type="number" class="bx--text-input" id="video[decode_chunk_size]" name="video[decode_chunk_size]" value="{{ scene.video.decode_chunk_size }}">
-                        </div>
-                        <div class="bx--form-item">
-                            <label for="video[motion_bucket_id]" class="bx--label">Motion Bucket ID</label>
-                            <input type="number" class="bx--text-input" id="video[motion_bucket_id]" name="video[motion_bucket_id]" value="{{ scene.video.motion_bucket_id }}">
-                        </div>
-                        <div class="bx--form-item">
-                            <label for="video[noise_aug_strength]" class="bx--label">Noise Aug Strength</label>
-                            <input type="number" step="0.1" class="bx--text-input" id="video[noise_aug_strength]" name="video[noise_aug_strength]" value="{{ scene.video.noise_aug_strength }}">
-                        </div>
-                        <div class="bx--form-item">
-                            <label for="video[fps]" class="bx--label">FPS</label>
-                            <input type="number" class="bx--text-input" id="video[fps]" name="video[fps]" value="{{ scene.video.fps }}">
-                        </div>
-                        <div class="bx--form-item">
-                            <button type="submit" class="bx--btn bx--btn--primary" style="margin-top: 32px;">Update Scene</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Right Column: Submit Button -->
-                    <div class="bx--col-lg-5 bx--col-md-5 bx--col-sm-12">
-                    
-                        <!-- Additional Content: Scene and Video Generation -->
-                        <div class="bx--row bx--row--condensed">
-                            <div class="bx--col-lg-12 bx--col-md-12 bx--col-sm-12">
-                                <div data-tabs class="bx--tabs">
-                                    <div class="bx--tabs-trigger" tabindex="0">
-                                        <a href="javascript:void(0)" class="bx--tabs-trigger-text" tabindex="-1"></a>
-                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
-                                            <path d="M5 6L0 1 0.7 0.3 5 4.6 9.3 0.3 10 1z"></path>
-                                        </svg>
-                                    </div>
-                                    <ul class="bx--tabs__nav bx--tabs__nav--hidden" role="tablist">
-                                        <li class="bx--tabs__nav-item bx--tabs__nav-item--selected" data-target=".tab-1-default" role="tab" aria-selected="true">
-                                            <a tabindex="0" id="tab-link-1-default" class="bx--tabs__nav-link" href="javascript:void(0)" role="tab" aria-controls="tab-panel-1-default">Frame</a>
-                                        </li>
-                                        <li class="bx--tabs__nav-item" data-target=".tab-2-default" role="tab">
-                                            <a tabindex="0" id="tab-link-2-default" class="bx--tabs__nav-link" href="javascript:void(0)" role="tab" aria-controls="tab-panel-2-default">Video</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="bx--tab-content">
-                                    <!-- Frame Tab Content -->
-                                    <div id="tab-panel-1-default" class="tab-1-default bx--tab-content" role="tabpanel" aria-labelledby="tab-link-1-default" aria-hidden="false">
-                                        <h2 class="bx--type-expressive-heading-03">Frame</h2>
-                                        <p id="frame-status">{{ frame_status_message }}</p>
-                                        {% if frame_exists %}
-                                        <img src="{{ url_for('serve_frame', scene_id=scene_id) }}" alt="Frame for scene {{ scene_id }}" class="bx--image" style="width: 512px; height: 286px;">
-                                        <div>
-                                            <a href="{{ url_for('delete_frame', scene_id=scene_id) }}" class="bx--btn bx--btn--danger">Delete Frame</a>
-                                        </div>
-                                    {% elif not frame_status or frame_status.status == 'error' %}
-                                        <form action="{{ url_for('generate_frame', scene_id=scene_id) }}" method="POST">
-                                            <button type="submit" class="bx--btn bx--btn--primary">Generate Frame</button>
-                                        </form>
-                                    {% endif %}
-                                    </div>
-                                    
-                                    <!-- Video Tab Content -->
-                                    <div id="tab-panel-2-default" class="tab-2-default bx--tab-content" role="tabpanel" aria-labelledby="tab-link-2-default" aria-hidden="true" hidden>
-                                        <h2 class="bx--type-expressive-heading-03">Video</h2>
-                                        <p id="video-status">{{ video_status_message }}</p>
-                                        {% if video_exists %}
-                                        <video controls class="bx--image" style="width: 512px; height: 286px;">
-                                            <source src="{{ url_for('serve_video', scene_id=scene_id) }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                        <div>
-                                            <a href="{{ url_for('delete_video', scene_id=scene_id) }}" class="bx--btn bx--btn--danger">Delete Video</a>
-                                            <a href="{{ url_for('download_video', scene_id=scene_id) }}" class="bx--btn bx--btn--secondary">Download Video</a>
-                                        </div>
-                                    {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+
+            <div class="bx--form-item">
+                <label for="length" class="bx--label">Length (seconds)</label>
+                <div class="bx--text-input__field-wrapper">
+                    <input type="number" step="0.1" class="bx--text-input" id="length" name="length"
+                        value="{{ scene.length }}">
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <h3 class="bx--type-expressive-heading-03">Video Parameters</h3>
+            <div class="bx--form-item">
+                <label for="video[seed]" class="bx--label">Seed</label>
+                <input type="number" class="bx--text-input" id="video[seed]" name="video[seed]"
+                    value="{{ scene.video.seed }}">
+            </div>
+            <div class="bx--form-item">
+                <label for="video[decode_chunk_size]" class="bx--label">Decode Chunk Size</label>
+                <input type="number" class="bx--text-input" id="video[decode_chunk_size]"
+                    name="video[decode_chunk_size]" value="{{ scene.video.decode_chunk_size }}">
+            </div>
+            <div class="bx--form-item">
+                <label for="video[motion_bucket_id]" class="bx--label">Motion Bucket ID</label>
+                <input type="number" class="bx--text-input" id="video[motion_bucket_id]"
+                    name="video[motion_bucket_id]" value="{{ scene.video.motion_bucket_id }}">
+            </div>
+            <div class="bx--form-item">
+                <label for="video[noise_aug_strength]" class="bx--label">Noise Aug Strength</label>
+                <input type="number" step="0.1" class="bx--text-input" id="video[noise_aug_strength]"
+                    name="video[noise_aug_strength]" value="{{ scene.video.noise_aug_strength }}">
+            </div>
+            <div class="bx--form-item">
+                <label for="video[fps]" class="bx--label">FPS</label>
+                <input type="number" class="bx--text-input" id="video[fps]" name="video[fps]"
+                    value="{{ scene.video.fps }}">
+            </div>
+            <div class="bx--form-item">
+                <button type="submit" class="bx--btn bx--btn--primary" style="margin-top: 32px;">Update Scene</button>
+            </div>
+        </form>
     </div>
 
+    <!-- Right Column: Frame and Video Management -->
+    <div class="bx--col-lg-5 bx--col-md-5 bx--col-sm-13">
+        <div class="bx--tabs" data-tabs>
+            <ul class="bx--tabs__nav" role="tablist">
+                <li class="bx--tabs__nav-item bx--tabs__nav-item--selected" data-target=".tab-1-default" role="tab" aria-selected="true">
+                    <a tabindex="0" id="tab-link-1-default" class="bx--tabs__nav-link" href="javascript:void(0)" role="tab" aria-controls="tab-panel-1-default">Frame</a>
+                </li>
+                <li class="bx--tabs__nav-item" data-target=".tab-2-default" role="tab">
+                    <a tabindex="0" id="tab-link-2-default" class="bx--tabs__nav-link" href="javascript:void(0)" role="tab" aria-controls="tab-panel-2-default">Video</a>
+                </li>
+            </ul>
+            <div class="bx--tab-content">
+                <!-- Frame Tab Content -->
+                <div id="tab-panel-1-default" class="tab-1-default bx--tab-content" role="tabpanel" aria-labelledby="tab-link-1-default" aria-hidden="false">
+                    <br />
+                    {% if frame_exists %}
+                        <img src="{{ url_for('serve_frame', scene_id=scene_id) }}" alt="Frame for scene {{ scene_id }}" class="bx--image" style="width: 100%; height: auto;">
+                        <div>
+                            <button onclick="deleteFrame()" class="bx--btn bx--btn--danger">Delete Frame</button>
+                        </div>
+                    {% elif not frame_status or frame_status.status == 'error' %}
+                    <img src="/static/images/no-frame.png" alt="No Frame" class="bx--image" style="width: 100%; height: auto;">
+                    <button onclick="generateFrame()" class="bx--btn bx--btn--primary">Generate Frame</button>
+                    {% endif %}
+                    <br />
+                    <p id="frame-status">{{ frame_status_message }}</p>
+                </div>
+
+                <!-- Video Tab Content -->
+                <div id="tab-panel-2-default" class="tab-2-default bx--tab-content" role="tabpanel" aria-labelledby="tab-link-2-default" aria-hidden="true" hidden>
+                    <br />
+                    {% if video_exists %}
+                        <video controls class="bx--image" style="width: 100%; height: auto;">
+                            <source src="{{ url_for('serve_video', scene_id=scene_id) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div>
+                            <button onclick="deleteVideo()" class="bx--btn bx--btn--danger">Delete Video</button>
+                            <a href="{{ url_for('download_video', scene_id=scene_id) }}" class="bx--btn bx--btn--secondary">Download Video</a>
+                        </div>
+                    {% elif frame_exists %}
+                        <img src="/static/images/no-video.png" alt="No Frame" class="bx--image" style="width: 100%; height: auto;">
+                        <button onclick="generateVideo()" class="bx--btn bx--btn--primary">Generate Video</button>
+                    {% else %}
+                        <img src="/static/images/no-video.png" alt="No Frame" class="bx--image" style="width: 100%; height: auto;">
+                    <br />
+                    {% endif %}
+                    <p id="video-status">{{ video_status_message }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
     function generateFrame() {
-        fetch('{{ url_for("generate_frame", scene_id=scene_id) }}', {method: 'POST'})
+        fetch('{{ url_for("generate_frame", scene_id=scene_id) }}', { method: 'POST' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('frame-status').textContent = data.message;
@@ -150,7 +133,7 @@
     }
 
     function generateVideo() {
-        fetch('{{ url_for("generate_video_for_scene", scene_id=scene_id) }}', {method: 'POST'})
+        fetch('{{ url_for("generate_video_for_scene", scene_id=scene_id) }}', { method: 'POST' })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('video-status').textContent = data.message;
@@ -158,6 +141,34 @@
                     checkStatus('video');
                 }
             });
+    }
+
+    function deleteFrame() {
+        if (confirm('Are you sure you want to delete this frame?')) {
+            fetch('{{ url_for("delete_frame", scene_id=scene_id) }}', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        location.reload();
+                    } else {
+                        alert('Error deleting frame: ' + data.message);
+                    }
+                });
+        }
+    }
+
+    function deleteVideo() {
+        if (confirm('Are you sure you want to delete this video?')) {
+            fetch('{{ url_for("delete_video", scene_id=scene_id) }}', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        location.reload();
+                    } else {
+                        alert('Error deleting video: ' + data.message);
+                    }
+                });
+        }
     }
 
     function checkStatus(mediaType) {

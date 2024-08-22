@@ -12,13 +12,13 @@
                 <table class="bx--data-table bx--data-table--zebra bx--data-table--compact">
                     <thead>
                         <tr>
-                            <th class="bx--table-header-label">Name</th>
-                            <th class="bx--table-header-label">Length</th>
-                            <th class="bx--table-header-label">Prompt</th>
-                            <th class="bx--table-header-label">Actions</th>
+                            <th class="bx--table-header-label" style="width: 15%;">Name</th>
+                            <th class="bx--table-header-label" style="width: 10%;">Length</th>
+                            <th class="bx--table-header-label" style="width: auto;">Prompt</th>
+                            <th class="bx--table-header-label" style="width: 15%;">Status</th>
+                            <th class="bx--table-header-label" style="width: 10%;">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
                         {% for scene in scenes %}
                         <tr>
                             <td>{{ scene.get('name', 'Unnamed Scene') }}</td>
@@ -28,6 +28,12 @@
                                     {{ scene['prompt'][:50] }}{% if scene['prompt']|length > 50 %}...{% endif %}
                                 {% else %}
                                     No prompt available
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if scene.get('updated') %}
+                                    Re-Sync
+                                {% else %}
                                 {% endif %}
                             </td>
                             <td>
