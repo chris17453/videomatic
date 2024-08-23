@@ -37,7 +37,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ url_for('view_scene', scene_id=loop.index) }}" class="bx--btn bx--btn--primary bx--btn--sm">View/Edit</a>
+                                <a href="{{ url_for('scene.view_scene', scene_id=loop.index) }}" class="bx--btn bx--btn--primary bx--btn--sm">View/Edit</a>
                             </td>
                         </tr>
                         {% endfor %}

@@ -24,7 +24,7 @@ reformat:
 	@python -m videomatic.cli reformat_video
 
 web:
-	@python web/app.py
+	@python -m web.app
 
 queue:
 	@python -m videomatic.queue

@@ -13,20 +13,20 @@
     <!-- Header with fixed positioning -->
     <header class="bx--header" role="banner" aria-label="Video-o-matic">
         <div class="bx--header__name">
-            <a href="{{ url_for('index') }}" class="bx--header__name">
+            <a href="{{ url_for('dashboard.index') }}" class="bx--header__name">
                 Video-o-matic
             </a>
         </div>
         <nav class="bx--header__nav" role="navigation" aria-label="Main Navigation">
             <ul class="bx--header__menu-bar">
                 <li class="bx--header__menu-item">
-                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('index') }}">Home</a>
+                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('dashboard.index') }}">Home</a>
                 </li>
                 <li class="bx--header__menu-item">
-                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('create_scene') }}">Create Scene</a>
+                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('create_scene.create_scene') }}">Create Scene</a>
                 </li>
                 <li class="bx--header__menu-item">
-                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('view_scenes') }}">View Scenes</a>
+                    <a class="bx--header__menu-item bx--header__menu-item--link" href="{{ url_for('scenes.view_scenes') }}">View Scenes</a>
                 </li>
              </ul>
         </nav>
